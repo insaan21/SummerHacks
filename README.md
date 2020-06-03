@@ -1,2 +1,0 @@
-# SummerHacks
-Freetail Hackers SummerHacks
