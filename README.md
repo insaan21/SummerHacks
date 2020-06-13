@@ -17,14 +17,14 @@ run: npm start
 To test API
 
 POST Request: 
-http:localhost:3000/add
+http:localhost:5000/add
 
 GET Requests:
 
-get all : http:localhost:3000/get/all
-get by id : http:localhost:3000/get/:commentID
+get all : http:localhost:5000/get/all
+get by id : http:localhost:5000/get/:commentID
 
 DELETE Request"
 
-http:localhost:3000/delete/:commentID
+http:localhost:5000/delete/:commentID
 
