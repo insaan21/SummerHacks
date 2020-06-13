@@ -7,13 +7,13 @@ window.onload = function() {
             "comment" : comment
         }
         var request1 = new XMLHttpRequest();
-        request1.open("POST", "http://localhost:3000/add");
+        request1.open("POST", "http://localhost:5000/add");
         request1.setRequestHeader('Content-Type', 'application/json');
         request1.send(JSON.stringify(addComment));
 
         //displayAllComments
         var request2 = new XMLHttpRequest();
-        request2.open('GET', 'http://localhost:3000/get/all');
+        request2.open('GET', 'http://localhost:5000/get/all');
         request2.onload = function(){
             const data = JSON.parse(request2.response);
             for(var i = 0; i < data.length; i++){
