@@ -11,7 +11,8 @@ async function addComment(request, response){
     console.log(request.body);
     const comment = new Comments({
         name : request.body.name,
-        comment : request.body.comment
+        comment : request.body.comment,
+        url : request.body.url
     });
 
     try{

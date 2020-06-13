@@ -2,9 +2,11 @@ window.onload = function() {
     document.getElementById('save').onclick = function(){
         var comment = document.getElementById('comment').value;
         var name = document.getElementById('name').value;
+        var url = document.getElementById('url').value;
         var addComment  = {
             "name" : name,
-            "comment" : comment
+            "comment" : comment,
+            "url" : url
         }
         var request1 = new XMLHttpRequest();
         request1.open("POST", "http://localhost:5000/add");
