@@ -19,9 +19,11 @@ function connected(){
 const postsRoutes = require('./routes/add');
 const getRoute = require('./routes/getAll');
 const deleteRoute = require('./routes/delete');
+const authenticationRoute = require('./routes/authentication');
 app.use('/add', postsRoutes);
 app.use('/get', getRoute);
 app.use('/delete',  deleteRoute);
+app.use('/auth',  authenticationRoute);
 
 app.listen(5000);
     
