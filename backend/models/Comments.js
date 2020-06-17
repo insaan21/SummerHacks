@@ -13,6 +13,10 @@ const CommentsSchema = mongoose.Schema({
         type : Date,
         default : Date.now
     },
+    userID : {
+        type : String,
+        required : true
+    },
     url : {
         type : String,
         required : true

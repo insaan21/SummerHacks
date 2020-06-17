@@ -4,14 +4,19 @@ const router = express.Router();
 const cors = require('cors');
 router.use(cors())
 
+
+router.get('/logout', (req,res) => {
+  req.logout();
+  res.redirect('/auth/google');
+})
 router.get('/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }));
+  passport.authenticate('google', { scope: ['profile'] }));
 
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
+    //successful login
+    res.redirect('/profile');
   });
 
   module.exports = router;

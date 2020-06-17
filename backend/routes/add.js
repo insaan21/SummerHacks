@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 const Comments = require('../models/Comments');
-router.use(cors())
+router.use(cors());
 
 //add a comment
 router.post('/', cors(), addComment);
@@ -12,6 +12,7 @@ async function addComment(request, response){
     const comment = new Comments({
         name : request.body.name,
         comment : request.body.comment,
+        userID : request.body.userID,
         url : request.body.url
     });
 
