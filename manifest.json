@@ -4,6 +4,7 @@
     "manifest_version" : 2,
     "description": "Test plugin",
     "browser_action" : {
+        "default_icon" : "images/rgbchromeblack.png", 
         "default_popup": "popup.html",
         "default_title": "Test"
     },
