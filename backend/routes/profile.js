@@ -4,7 +4,7 @@ const cors = require('cors');
 router.use(cors());
 
 const authCheck = (req, res, next) =>{
-    console.log(req.user);
+    //console.log(req.user);
     if(!req.user){
         res.send('Not logged in');
     }else{
@@ -12,7 +12,8 @@ const authCheck = (req, res, next) =>{
     }
 };
 router.get('/', authCheck, (req, res) =>{
-    res.send(req.user.googleID);
+    //console.log(req.user);
+    res.send(req.user); 
 });
 
 module.exports = router;

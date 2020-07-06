@@ -1,10 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const User = require('./User');
 
 const CommentsSchema = mongoose.Schema({
-    name : {
-        type : String,
-        required: true
-    },
     comment : {
         type : String,
         required : true
@@ -13,13 +10,16 @@ const CommentsSchema = mongoose.Schema({
         type : Date,
         default : Date.now
     },
-    userID : {
-        type : String,
+    user : {
+        type : JSON,
         required : true
     },
     url : {
         type : String,
         required : true
+    },
+    likes : {
+        type : Array
     }
 });
 

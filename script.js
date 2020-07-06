@@ -1,17 +1,20 @@
-var userID  = "";
+var currentUser = "";
 window.onload = function () {
+    //var temp = "";
     var loginRequest1 = new XMLHttpRequest();
     loginRequest1.open('GET', 'http://localhost:5000/profile');
     loginRequest1.onload = async function () {
+        //console.log(loginRequest1.responseText);
         if (await loginRequest1.responseText == 'Not logged in') {
             chrome.tabs.create({ url: 'http://localhost:5000/auth/google' });
+            //console.log('reached');
         }
     }
     loginRequest1.send();
     var loginRequest2 = new XMLHttpRequest();
     loginRequest2.open('GET', 'http:localhost:5000/profile');
     loginRequest2.onload = async function () {
-        userID = await loginRequest2.responseText;
+        currentUser = await loginRequest2.responseText;
     }
     loginRequest2.send();
     displayCommentsAtURL();
@@ -20,11 +23,11 @@ window.onload = function () {
         var comment = document.getElementById('comment').value;
         var name = document.getElementById('name').value;
         var url = document.getElementById('url').value;
+        //console.log(currentUser);
         var addComment = {
-            "name": name,
             "comment": comment,
             "url": url,
-            "userID": userID
+            "user": JSON.parse(currentUser)
         }
         var request1 = new XMLHttpRequest();
         request1.open("POST", "http://localhost:5000/add");
@@ -36,7 +39,12 @@ window.onload = function () {
         linebreak = document.createElement("br");
         userDiv.appendChild(linebreak);
         const div = document.createElement('div');
-        div.textContent = addComment.name + " : " + addComment.comment;
+        //console.log(addComment.user);
+        var currentImage = document.createElement("IMG");
+        currentImage.src = addComment.user.thumbnail;
+       
+        div.textContent = addComment.user.userName + " : " + addComment.comment;
+        document.body.appendChild(currentImage);
         document.body.appendChild(div);
     }
 
@@ -50,17 +58,20 @@ window.onload = function () {
 }
 const displayCommentsAtURL = () => {
     //displayAllComments
-    console.log('hello');
+    //console.log('hello');
     var request2 = new XMLHttpRequest();
     request2.open('GET', 'http://localhost:5000/get/all');
     request2.onload = function () {
         const data = JSON.parse(request2.response);
         for (var i = 0; i < data.length; i++) {
-            console.log(data);
+            //console.log(data);
             if (data[i].url == document.getElementById('url').value) {
                 console.log(data[i].comment);
                 const div = document.createElement('div');
-                div.textContent = data[i].name + " : " + data[i].comment;
+                div.textContent = data[i].user.userName + " : " + data[i].comment;
+                var currentImage = document.createElement("IMG");
+                currentImage.src = data[i].user.thumbnail;
+                document.body.appendChild(currentImage);
                 document.body.appendChild(div);
             }
         }
@@ -72,20 +83,22 @@ const displayUserComments = () => {
     var loginRequest3 = new XMLHttpRequest();
     loginRequest3.open('GET', 'http:localhost:5000/profile');
     loginRequest3.onload = function () {
-        userID = loginRequest3.responseText;
-        console.log(userID);
+        currentUser = loginRequest3.responseText;
+        //console.log(currentUser);
     }
     loginRequest3.send();
     var request3 = new XMLHttpRequest();
     request3.open('GET', 'http://localhost:5000/get/all');
     request3.onload = function () {
         const data = JSON.parse(request3.response);
+        //console.log(data);
         for (var i = 0; i < data.length; i++) {
-            console.log(data);
-            console.log(data[i].userID);
-            console.log(userID);
-            if (data[i].userID == userID && data[i].url == document.getElementById('url').value) {
-                console.log(data[i]);
+            //console.log(data);
+            //console.log(data[i].user);
+            console.log(JSON.parse(currentUser)._id);
+            console.log(data[i].user._id);
+            if (data[i].user._id == JSON.parse(currentUser)._id && data[i].url == document.getElementById('url').value) {
+                console.log(data[i].user.googleID);
                 var userDiv = document.getElementById('userComments');
                 var userContent = document.createTextNode(data[i].comment);
                 userDiv.appendChild(userContent);
