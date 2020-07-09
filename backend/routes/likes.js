@@ -8,7 +8,7 @@ router.use(cors());
 router.patch('/addLike/:commentID/:userID', async (req,res) => {
     const comment = await Comments.findById(req.params.commentID);
     //const user = await User.findById(req.params.userID);
-    const newLikes = comment.likes;
+    var newLikes = comment.likes;
     if(newLikes.includes(req.params.userID)){
         res.send('already liked');
     }

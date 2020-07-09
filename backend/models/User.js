@@ -22,7 +22,14 @@ const userSchema = new mongoose.Schema({
     date : {
         type : Date,
         default : Date.now
+    },
+    friends : {
+        type : Array
+    },
+    friendRequests : {
+        type : Array
     }
+    
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -39,12 +39,14 @@ const deleteRoute = require('./routes/delete');
 const authenticationRoute = require('./routes/authentication');
 const profileRoute = require('./routes/profile');
 const likesRoute = require('./routes/likes');
+const friendsRoute = require('./routes/friends');
 app.use('/add', postsRoutes);
 app.use('/get', getRoute);
 app.use('/delete',  deleteRoute);
 app.use('/auth',  authenticationRoute);
 app.use('/profile',  profileRoute);
 app.use('/likes', likesRoute);
+app.use('/friends', friendsRoute);
 
 app.listen(5000);
     
