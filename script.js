@@ -81,10 +81,16 @@ const displayCommentsAtURL = () => {
                 const currentImage = document.createElement("IMG");
                 currentImage.id='userimage'
                 currentImage.src = data[i].user.thumbnail;
+                var date1 = new Date(data[i].date);
+                console.log(date1.getDate());
+                const date = document.createElement('div');
+                date.id='date';
+                date.textContent = data[i].date;
                 const linebreak = document.createElement("br");
                 document.body.appendChild(currentImage);
                 document.body.appendChild(div);
                 document.body.appendChild(messagediv);
+                document.body.appendChild(date);
                 document.body.appendChild(linebreak);
             }
         }
