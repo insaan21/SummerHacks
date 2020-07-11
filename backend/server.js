@@ -1,3 +1,6 @@
+//main server file
+
+//imports
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -47,6 +50,7 @@ app.use('/auth',  authenticationRoute);
 app.use('/profile',  profileRoute);
 app.use('/likes', likesRoute);
 app.use('/friends', friendsRoute);
+
 
 app.listen(5000);
     

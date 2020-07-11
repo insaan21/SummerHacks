@@ -1,8 +1,11 @@
+//route with user information
+
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 router.use(cors());
 
+//if not logged in 
 const authCheck = (req, res, next) =>{
     //console.log(req.user);
     if(!req.user){
@@ -11,8 +14,8 @@ const authCheck = (req, res, next) =>{
         next();
     }
 };
+
 router.get('/', authCheck, (req, res) =>{
-    //console.log(req.user);
     res.send(req.user); 
 });
 

@@ -5,6 +5,7 @@ const Comments = require('../models/Comments');
 const User = require('../models/User');
 router.use(cors());
 
+//adds the user ID to the likes array for the comment
 router.patch('/addLike/:commentID/:userID', async (req,res) => {
     const comment = await Comments.findById(req.params.commentID);
     //const user = await User.findById(req.params.userID);
@@ -23,6 +24,7 @@ router.patch('/addLike/:commentID/:userID', async (req,res) => {
     } 
 });
 
+//checks if the current user has liked 
 router.get('/userLiked/:commentID/:userID', async(req, res) => {
    const comment = await Comments.findById(req.params.commentID);
    const likes = comment.likes;

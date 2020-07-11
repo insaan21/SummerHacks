@@ -18,6 +18,8 @@ const CommentsSchema = mongoose.Schema({
         type : String,
         required : true
     },
+
+    //might change to set to not allow duplicates
     likes : {
         type : Array
     }

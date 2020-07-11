@@ -1,3 +1,5 @@
+//route to get comments
+
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
@@ -15,6 +17,9 @@ async function getAllComments(request, response){
         response.json({message : err});
     }
 }
+
+
+//get specific comment
 router.get('/:commentID', cors(), getSpecificComment);
 
 async function getSpecificComment(request, response){

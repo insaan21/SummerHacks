@@ -1,3 +1,4 @@
+//get url of current page
 document.addEventListener("DOMContentLoaded", function() {
     chrome.tabs.query({
         active:  !0,
