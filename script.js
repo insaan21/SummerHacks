@@ -39,10 +39,11 @@ window.onload = function () {
         linebreak = document.createElement("br");
         userDiv.appendChild(linebreak);
         const div = document.createElement('div');
+        div.id = 'message123';
         //console.log(addComment.user);
-        var currentImage = document.createElement("IMG");
-        currentImage.src = addComment.user.thumbnail;
-       
+        const currentImage = document.createElement("IMG");
+        currentImage.id="userimage"  
+        currentImage.src = addComment.user.thumbnail;     
         div.textContent = addComment.user.userName + " : " + addComment.comment;
         document.body.appendChild(currentImage);
         document.body.appendChild(div);
@@ -68,11 +69,19 @@ const displayCommentsAtURL = () => {
             if (data[i].url == document.getElementById('url').value) {
                 console.log(data[i].comment);
                 const div = document.createElement('div');
-                div.textContent = data[i].user.userName + " : " + data[i].comment;
-                var currentImage = document.createElement("IMG");
+                div.id = 'message123'
+                div.textContent = data[i].user.userName + ":";
+                const messagediv = document.createElement('div');
+                messagediv.id = 'message321';
+                messagediv.textContent = data[i].comment;
+                const currentImage = document.createElement("IMG");
+                currentImage.id='userimage'
                 currentImage.src = data[i].user.thumbnail;
+                const linebreak = document.createElement("br");
                 document.body.appendChild(currentImage);
                 document.body.appendChild(div);
+                document.body.appendChild(messagediv);
+                document.body.appendChild(linebreak);
             }
         }
     }
@@ -80,7 +89,7 @@ const displayCommentsAtURL = () => {
 }
 const displayUserComments = () => {
     //displayAllComments
-    var loginRequest3 = new XMLHttpRequest();
+    var loginRequest3 = new XMLHttpRequest(); 
     loginRequest3.open('GET', 'http:localhost:5000/profile');
     loginRequest3.onload = function () {
         currentUser = loginRequest3.responseText;

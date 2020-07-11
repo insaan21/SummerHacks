@@ -5,22 +5,30 @@
     <title>Document</title>
     <script src="script.js"></script>
     <script src="url.js"></script>
+    <link rel="stylesheet" type = "text/css" href="style.css">
+    <style> 
+        input[id="comment"]{  
+            text-align: center; 
+        }
+    </style>
 </head>
 
 <body>
     <p>
-    Name : <input id = "name">
-    <br/>
-    Commment: <input id = "comment">
-    <br/>
+    <!-- Name : <input id = "name"> -->
+    <!-- <br><br> -->
+    <div id="inputs">
+    <input id = "comment" placeholder= "Leave a message!">
+    <br><br>
     <input type = "hidden" id = "url" value = "url">
     <button id = "save">Save Line</button>
-    <button id = "logout"> logout</button>
+    <button id = "logout"> Logout</button>
     </p>
-    <div id = "userComments"> 
-        <h1> Your Comments</h1>
     </div>
-    <h1> Comments </h1>
+    <div id = "userComments"> 
+        <h1 id="yourcomments"> Your Comments</h1>
+    </div>
+    <h1 id="commentsheader"> Comments </h1>
 
     
         

@@ -1,0 +1,55 @@
+body{
+    background-color:#292929;
+    color: white;
+    text-align: left; 
+    width: 200px;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+#userimage{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 5px;
+    float: left; 
+}
+
+#message123{
+    font-weight: bold;
+    font-size: small;
+}
+
+#save {
+   background: grey;
+   color: white;
+}
+
+#logout {
+   background: grey;
+   color: white;
+}
+
+#message321 {
+    color: white;
+    font-size: small;
+}
+
+#commentsheader {
+    text-align: center;
+}
+
+#userComments {
+    text-align: center;
+}
+
+#inputs {
+    text-align: center;
+    position: sticky;
+    top: 0px;
+    padding: 10px;
+    background-color: #292929; 
+}
+
