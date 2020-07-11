@@ -53,5 +53,8 @@ body{
     background-color: #292929; 
 }
 
-
+#date {
+    text-align: small;
+    color: rgb(158, 158, 158);
+}
 

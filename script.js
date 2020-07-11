@@ -91,18 +91,19 @@ const displayCommentsAtURL = () => {
                 currentImage.id='userimage'
                 currentImage.src = data[i].user.thumbnail;
                 var date1 = new Date(data[i].date);
-                console.log(date1.getDate());
+                var options = { month: 'long'};
+                var month = new Intl.DateTimeFormat('en-US', options).format(date1);
+                var day = date1.getDate();
+                var year = date1.getFullYear();
                 const date = document.createElement('div');
                 date.id='date';
-                date.textContent = data[i].date;
+                date.textContent = month + " " + day + ", " + year;
                 const linebreak = document.createElement("br");
                 document.body.appendChild(currentImage);
                 document.body.appendChild(div);
                 document.body.appendChild(messagediv);
                 document.body.appendChild(date);
                 document.body.appendChild(linebreak);
-                var date1 = new Date(data[i].date);
-                console.log(date1.getDate());
             }
         }
     }
