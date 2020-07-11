@@ -1,5 +1,5 @@
 # SummerHacks
-Freetail Hackers SummerHacks
+Freetail Hackers SummerHacks Hackathon
 
 Node modules needed:
 ```bash
@@ -17,7 +17,7 @@ To start server
 npm start
 ```
 
-To test chrome extension:
+To test chrome extension:\
 Go to chrome://extensions.\
 Put yourself in developer mode.\
 Click on load unpacked extensions and load the whole summerhacks folder.\ 
