@@ -26,7 +26,6 @@ router.patch('/sendFriendRequest', async (req,res) => {
     User.update({_id : userRequested._id}, {$set : {friendRequests : friendRequests}})
         .exec()
         .then(result => {
-            console.log(result);
             res.json(result);
         })
     } 
@@ -82,7 +81,6 @@ router.patch('/acceptFriendRequest', async(req, res) => {
     User.update({_id : req.body.currentUserID}, {$set : {friends : currentUserFriends, friendRequests : currentUserFriendRequests}})
         .exec()
         .then(result => {
-            console.log(result);
             res.json(result);
         })
     const acceptedUser = await User.findById(req.body.acceptID);
@@ -91,7 +89,6 @@ router.patch('/acceptFriendRequest', async(req, res) => {
     User.update({_id : req.body.acceptID}, {$set : {friends : acceptedUserFriends}})
         .exec()
         .then(result => {
-            console.log(result);
             res.json(result);
         })
 });

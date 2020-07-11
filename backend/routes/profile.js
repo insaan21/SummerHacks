@@ -7,7 +7,6 @@ router.use(cors());
 
 //if not logged in 
 const authCheck = (req, res, next) =>{
-    //console.log(req.user);
     if(!req.user){
         res.send('Not logged in');
     }else{

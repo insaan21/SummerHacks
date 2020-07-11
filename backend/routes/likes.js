@@ -18,7 +18,6 @@ router.patch('/addLike/:commentID/:userID', async (req,res) => {
     Comments.update({_id : req.params.commentID}, {$set : {likes : newLikes}})
         .exec()
         .then(result => {
-            console.log(result);
             res.json(result);
         })
     } 
@@ -30,7 +29,6 @@ router.get('/userLiked/:commentID/:userID', async(req, res) => {
    const likes = comment.likes;
    var userLiked = false;
    for(var id of likes){
-       console.log(id);
         if(id == req.params.userID){
             userLiked = true;
             break;

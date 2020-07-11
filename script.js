@@ -33,7 +33,8 @@ window.onload = function () {
         var addComment = {
             "comment": comment,
             "url": url,
-            "user": JSON.parse(currentUser)
+            "user": JSON.parse(currentUser),
+            "date" : Date.now
         }
         var request1 = new XMLHttpRequest();
 
@@ -46,7 +47,7 @@ window.onload = function () {
         var userDiv = document.getElementById('userComments');
         var userContent = document.createTextNode(addComment.comment);
         userDiv.appendChild(userContent);
-        linebreak = document.createElement("br");
+        const linebreak = document.createElement("br");
         userDiv.appendChild(linebreak);
         const div = document.createElement('div');
         div.id = 'message123';
@@ -57,9 +58,19 @@ window.onload = function () {
         const messagediv = document.createElement('div');
         messagediv.id = 'message321';
         messagediv.textContent = addComment.comment;
+        var date1 = new Date(Date.now());
+        var options = { month: 'long'};
+        var month = new Intl.DateTimeFormat('en-US', options).format(date1);
+        var day = date1.getDate();
+        var year = date1.getFullYear();
+        const date = document.createElement('div');
+        date.id='date';
+        date.textContent = month + " " + day + ", " + year;
         document.body.appendChild(currentImage);
         document.body.appendChild(div);
         document.body.appendChild(messagediv);
+        document.body.appendChild(date);
+        document.body.appendChild(linebreak);
     }
 
     //logout
