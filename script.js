@@ -44,9 +44,13 @@ window.onload = function () {
         const currentImage = document.createElement("IMG");
         currentImage.id="userimage"  
         currentImage.src = addComment.user.thumbnail;     
-        div.textContent = addComment.user.userName + " : " + addComment.comment;
+        div.textContent = addComment.user.userName + ":" 
+        const messagediv = document.createElement('div');
+        messagediv.id = 'message321';
+        messagediv.textContent = addComment.comment;
         document.body.appendChild(currentImage);
         document.body.appendChild(div);
+        document.body.appendChild(messagediv);
     }
 
     document.getElementById('logout').onclick = function() {
