@@ -64,7 +64,7 @@ body{
 #replybutton {
     background-color: transparent;
     outline: none;
-    text-align : small;
+    font-size: x-small;
     background-repeat:no-repeat;
     border: none;
     cursor:pointer;
