@@ -10,7 +10,6 @@ router.use(cors());
 router.post('/', cors(), addComment);
 
 async function addComment(request, response){
-    console.log(request.body);
     const comment = new Comments({
         comment : request.body.comment,
         url : request.body.url,
