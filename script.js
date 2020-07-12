@@ -12,7 +12,6 @@ window.onload = function () {
     }
     loginRequest1.send();
 
-
     //get current user ID
     var loginRequest2 = new XMLHttpRequest();
     loginRequest2.open('GET', 'http:localhost:5000/profile');
@@ -34,7 +33,8 @@ window.onload = function () {
             "comment": comment,
             "url": url,
             "user": JSON.parse(currentUser),
-            "date" : Date.now
+            "date" : Date.now,
+            "isReply" : false
         }
         var request1 = new XMLHttpRequest();
 
@@ -66,9 +66,13 @@ window.onload = function () {
         const date = document.createElement('div');
         date.id='date';
         date.textContent = month + " " + day + ", " + year;
+        const replyButton = document.createElement("button");
+        replyButton.id = "replybutton";
+        replyButton.textContent = "Reply";
         document.body.appendChild(currentImage);
         document.body.appendChild(div);
         document.body.appendChild(messagediv);
+        document.body.appendChild(replyButton);
         document.body.appendChild(date);
         document.body.appendChild(linebreak);
     }
@@ -110,9 +114,14 @@ const displayCommentsAtURL = () => {
                 date.id='date';
                 date.textContent = month + " " + day + ", " + year;
                 const linebreak = document.createElement("br");
+                const replyButton = document.createElement("button");
+                replyButton.id = "replybutton";
+                replyButton.textContent = "Reply";
+                replyButton.onclick = addReply;
                 document.body.appendChild(currentImage);
                 document.body.appendChild(div);
                 document.body.appendChild(messagediv);
+                document.body.appendChild(replyButton);
                 document.body.appendChild(date);
                 document.body.appendChild(linebreak);
             }
@@ -149,4 +158,8 @@ const displayUserComments = () => {
         }
     }
     request3.send();
+}
+
+const addReply = () => {
+
 }

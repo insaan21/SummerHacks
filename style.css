@@ -58,3 +58,15 @@ body{
     color: rgb(158, 158, 158);
 }
 
+#replybutton {
+    background-color: transparent;
+    outline: none;
+    text-align : small;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    color: rgb(158, 158, 158);
+    margin-right: 20px;
+    float: right;
+}

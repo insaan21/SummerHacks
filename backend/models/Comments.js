@@ -18,11 +18,22 @@ const CommentsSchema = mongoose.Schema({
         type : String,
         required : true
     },
-
     //might change to set to not allow duplicates
     likes : {
         type : Array
+    },
+
+    //array of comment ID's which are replies
+    replies : {
+        type : Array
+    },
+    isReply : {
+        type : Boolean,
+        required : true
+    },
+    replyTo : {
+        type : String
     }
-});
+}); 
 
 module.exports = mongoose.model('Comments', CommentsSchema);

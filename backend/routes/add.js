@@ -10,11 +10,23 @@ router.use(cors());
 router.post('/', cors(), addComment);
 
 async function addComment(request, response){
-    const comment = new Comments({
+    var comment;
+    if(request.body.isReply){
+    comment = new Comments({
+        comment : request.body.comment,
+        url : request.body.url,
+        user : request.body.user,
+        isReply : request.body.isReply,
+        replyTo : request.body.replyTo
+    });
+    }
+    else {
+    comment = new Comments({
         comment : request.body.comment,
         url : request.body.url,
         user : request.body.user
     });
+    }
 
     try{
     const savedComment = await comment.save();
