@@ -98,20 +98,20 @@ const displayCommentsAtURL = () => {
             if (data[i].url == document.getElementById('url').value) {
                 const div = document.createElement('div');
                 div.id = 'message123'
-                div.textContent = data[i].user.userName + ":";
+                div.textContent = data[i].user.userName 
                 const messagediv = document.createElement('div');
                 messagediv.id = 'message321';
                 messagediv.textContent = data[i].comment;
                 const currentImage = document.createElement("IMG");
                 currentImage.id='userimage'
                 currentImage.src = data[i].user.thumbnail;
+                const date = document.createElement('div');
+                date.id='date';
                 var date1 = new Date(data[i].date);
                 var options = { month: 'long'};
                 var month = new Intl.DateTimeFormat('en-US', options).format(date1);
                 var day = date1.getDate();
                 var year = date1.getFullYear();
-                const date = document.createElement('div');
-                date.id='date';
                 date.textContent = month + " " + day + ", " + year;
                 const linebreak = document.createElement("br");
                 const replyButton = document.createElement("button");

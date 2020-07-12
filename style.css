@@ -14,22 +14,24 @@ body{
     width: 40px;
     border-radius: 50%;
     margin-right: 5px;
+    margin-top: 4px;
     float: left; 
 }
 
 #message123{
-    font-weight: bold;
-    font-size: small;
+    font-size: x-small;
 }
 
 #save {
    background: grey;
    color: white;
+   border: 0px;
 }
 
 #logout {
    background: grey;
    color: white;
+   border: 0px;
 }
 
 #message321 {
@@ -49,12 +51,13 @@ body{
     text-align: center;
     position: sticky;
     top: 0px;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 2px;
     background-color: #292929; 
 }
 
 #date {
-    text-align: small;
+    font-size: x-small;
     color: rgb(158, 158, 158);
 }
 
