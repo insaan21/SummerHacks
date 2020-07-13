@@ -18,7 +18,7 @@ body{
     float: left; 
 }
 
-#message123{
+.message123{
     font-size: x-small;
 }
 
@@ -73,3 +73,9 @@ body{
     margin-right: 20px;
     float: right;
 }
+
+.highlight {
+    color: pink;
+    background: blue;
+    font-style: fantasy;
+  }

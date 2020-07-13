@@ -97,7 +97,8 @@ const displayCommentsAtURL = () => {
         for (var i = 0; i < data.length; i++) {
             if (data[i].url == document.getElementById('url').value) {
                 const div = document.createElement('div');
-                div.id = 'message123'
+                div.id = data[i]._id
+                div.className = 'message123'
                 div.textContent = data[i].user.userName 
                 const messagediv = document.createElement('div');
                 messagediv.id = 'message321';
@@ -116,14 +117,19 @@ const displayCommentsAtURL = () => {
                 const linebreak = document.createElement("br");
                 const replyButton = document.createElement("button");
                 replyButton.id = "replybutton";
+                replyButton.value = data[i]._id
                 replyButton.textContent = "Reply";
-                replyButton.onclick = addReply;
-                document.body.appendChild(currentImage);
+                //replyButton.onclick = addReply;
+                //replyButton.onclick = logvalue;
+                div.appendChild(currentImage);
+                div.appendChild(messagediv);
+                div.appendChild(replyButton);
+                div.appendChild(date);
+                div.appendChild(linebreak);
                 document.body.appendChild(div);
-                document.body.appendChild(messagediv);
-                document.body.appendChild(replyButton);
-                document.body.appendChild(date);
-                document.body.appendChild(linebreak);
+                
+                document.getElementById('replybutton').addEventListener("click", logvalue)
+                //document.getElementById('replybutton').addEventListener("click", logvalue)
             }
         }
     }
@@ -160,6 +166,18 @@ const displayUserComments = () => {
     request3.send();
 }
 
-const addReply = () => {
+const addReply = () => {}
 
+
+
+const logvalue = () => {
+    var commentid = document.getElementById("replybutton").value;
+    var divid = document.getElementById(commentid);
+    var newEl = document.createElement('div');
+    newEl.textContent = "hi"
+    insertAfter(newEl, divid); 
+}
+
+function insertAfter(el, referenceNode) {
+    referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
 }
