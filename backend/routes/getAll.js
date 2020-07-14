@@ -31,4 +31,14 @@ async function getSpecificComment(request, response){
     }
 }
 
+router.get('/allReplies/:commentID', async (req, res) => {
+    const comment = await Comments.findById(req.params.commentID);
+    var replies = comment.replies;
+    var allReplies = [];
+    for(var reply of replies){
+       var replyComment = await Comments.findById(reply);
+       allReplies.push(replyComment); 
+    }
+    res.send(allReplies);
+});
 module.exports = router;

@@ -32,7 +32,7 @@ const CommentsSchema = mongoose.Schema({
         required : true
     },
     replyTo : {
-        type : String
+        type : JSON
     }
 }); 
 

@@ -9,7 +9,7 @@ body{
     display: none;
 }
 
-#userimage{
+.userimage{
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -22,32 +22,32 @@ body{
     font-size: x-small;
 }
 
-#save {
+.save {
    background: grey;
    color: white;
    border: 0px;
 }
 
-#logout {
+.logout {
    background: grey;
    color: white;
    border: 0px;
 }
 
-#message321 {
+.message321 {
     color: white;
     font-size: small;
 }
 
-#commentsheader {
+.commentsheader {
     text-align: center;
 }
 
-#userComments {
+.userComments {
     text-align: center;
 }
 
-#inputs {
+.inputs {
     text-align: center;
     position: sticky;
     top: 0px;
@@ -56,12 +56,12 @@ body{
     background-color: #292929; 
 }
 
-#date {
+.date {
     font-size: x-small;
     color: rgb(158, 158, 158);
 }
 
-#replybutton {
+.replybutton {
     background-color: transparent;
     outline: none;
     font-size: x-small;
