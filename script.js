@@ -3,7 +3,6 @@
 
 
 
-
 var currentUser = "";
 var count = 0;
 window.onload = function () {
@@ -19,7 +18,7 @@ window.onload = function () {
 
     //get current user ID
     var loginRequest2 = new XMLHttpRequest();
-    loginRequest2.open('GET', 'http:localhost:5000/profile');
+    loginRequest2.open('GET', 'http:localhost:5000/profile', false);
     loginRequest2.onload = async function () {
         currentUser = await loginRequest2.responseText;
     }
@@ -81,6 +80,7 @@ window.onload = function () {
         const likeButton = document.createElement("i");
         likeButton.className = "likeButton";
         likeButton.id = addComment._id + "likeButton";
+        likeButton.value = addComment._id;
         div.appendChild(currentImage);
         div.appendChild(userDiv);
         div.appendChild(messagediv);
@@ -90,12 +90,7 @@ window.onload = function () {
         div.appendChild(linebreak);
         document.body.appendChild(div);
 
-        likeButton.onclick = function () {
-            var likestate = document.getElementById(this.id)
-            likestate.classList.toggle("likeButtonFilled");   
-        }    
-        
-        replyButton.onclick = function () {
+        replyButton.onclick = function() {
             var commentid = this.value;
             var originalDiv = document.getElementById(commentid);
             var textBox = document.createElement('input');
@@ -107,33 +102,53 @@ window.onload = function () {
             insertAfter(newDiv,originalDiv);
             submitButton.addEventListener('click', function() {
             var text = document.createElement('div');
+            text.id = "inputText";
             text.textContent = textBox.value;
             var userName = document.createElement('div');
             userName.textContent = JSON.parse(currentUser).userName;
             var finalDiv = document.createElement('div');
-            finalDiv.className="replydiv1"
             finalDiv.appendChild(userName);
             finalDiv.appendChild(text);
             insertAfter(finalDiv, originalDiv)
             newDiv.remove();
             var url = document.getElementById('url').value;
-                    var reply = {
-                        "comment": document.getElementById('inputText').textContent,
-                        "url": url,
-                        "user": JSON.parse(currentUser),
-                        "isReply" : true,
-                        "replyTo" : JSON.parse(currentUser).userName,
-                        "_id" : mongoObjectId()
-                    }
-                    var replyRequest = new XMLHttpRequest();
-                    replyRequest.open('POST', 'http://localhost:5000/add');
-                    replyRequest.setRequestHeader('Content-Type', 'application/json');
-                    replyRequest.send(JSON.stringify(reply));
-                    var addReplyToParent = new XMLHttpRequest();
-                    addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
-                    addReplyToParent.send();
+            var userName = originalDiv.getElementsByClassName('message123');
+            var reply = {
+                "comment": document.getElementById('inputText').textContent,
+                "url": url,
+                "user": JSON.parse(currentUser),
+                "isReply" : true,
+                "replyTo" : {
+                    "userName" : userName[0].textContent,
+                    "_id" : commentid
+                },
+                "_id" : mongoObjectId()
+            }
+            var replyRequest = new XMLHttpRequest();
+            replyRequest.open('POST', 'http://localhost:5000/add');
+            replyRequest.setRequestHeader('Content-Type', 'application/json');
+            replyRequest.send(JSON.stringify(reply));
+            var addReplyToParent = new XMLHttpRequest();
+            addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
+            addReplyToParent.send();
+            
+        
             });
-        }
+        };
+        likeButton.onclick = function () {
+            var likestate = document.getElementById(this.id)
+            likestate.classList.toggle("likeButtonFilled");  
+            if(likestate.className == "likeButton likeButtonFilled"){
+                const likeRequest = new XMLHttpRequest();
+                likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                likeRequest.send();
+            }
+            else{
+                const disLikeRequest = new XMLHttpRequest();
+                disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                disLikeRequest.send();
+            }
+        }  
     }
 
     //logout
@@ -189,10 +204,8 @@ const displayCommentsAtURL = () => {
                 const likeButton = document.createElement("i");
                 likeButton.className = "likeButton";
                 likeButton.id = data[i]._id + "likeButton";
-                //likeButton.type = "image";
-                //likeButton.src = "images/TESTheartunfilled.png"
-                //replyButton.onclick = addReply;
-                //replyButton.onclick = logvalue;
+                likeButton.value = data[i]._id;
+                checkIfLiked(likeButton);
                 div.appendChild(currentImage);
                 div.appendChild(userDiv);
                 div.appendChild(messagediv);
@@ -202,16 +215,9 @@ const displayCommentsAtURL = () => {
                 div.appendChild(linebreak);
                 document.body.appendChild(div);
                 //console.log(data[i].replies);
-                
-                likeButton.onclick = function () {
-                    var likestate = document.getElementById(this.id)
-                    likestate.classList.toggle("likeButtonFilled");   
-                }  
-
-                replyButton.onclick = function () {
+                replyButton.onclick = function() {
                     var commentid = this.value;
                     var originalDiv = document.getElementById(commentid);
-                    console.log(originalDiv);
                     var textBox = document.createElement('input');
                     var submitButton = document.createElement('button');
                     submitButton.textContent = "Submit";
@@ -224,10 +230,8 @@ const displayCommentsAtURL = () => {
                     text.id = "inputText";
                     text.textContent = textBox.value;
                     var userName = document.createElement('div');
-                    //userName.className="replyUserName"
                     userName.textContent = JSON.parse(currentUser).userName;
                     var finalDiv = document.createElement('div');
-                    finalDiv.className="replydiv1";
                     finalDiv.appendChild(userName);
                     finalDiv.appendChild(text);
                     insertAfter(finalDiv, originalDiv)
@@ -253,9 +257,25 @@ const displayCommentsAtURL = () => {
                     addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
                     addReplyToParent.send();
                     
-
-                    });
-                }
+                
+                    })
+                };
+                
+                
+                likeButton.onclick = function () {
+                    var likestate = document.getElementById(this.id)
+                    likestate.classList.toggle("likeButtonFilled");  
+                    if(likestate.className == "likeButton likeButtonFilled"){
+                        const likeRequest = new XMLHttpRequest();
+                        likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                        likeRequest.send();
+                    }
+                    else{
+                        const disLikeRequest = new XMLHttpRequest();
+                        disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                        disLikeRequest.send();
+                    }
+                }  
             }
                 
 
@@ -269,7 +289,7 @@ const displayCommentsAtURL = () => {
                     if(getReplies.status == 200){
                         replies = JSON.parse(getReplies.response);
                     }
-                    console.log(replies);
+                    //console.log(replies);
                     for (var j = replies.length-1; j>= 0; j--) {
                         //const reply = JSON.parse(getReply.response);
                         //console.log(reply);
@@ -300,59 +320,46 @@ const displayCommentsAtURL = () => {
                         replyButton1.id = "replybutton" +reply._id;
                         replyButton1.value = reply._id
                         replyButton1.textContent = "Reply";
-                        const likeButton = document.createElement("i");
-                        likeButton.className = "likeButton";
-                        likeButton.id = reply._id + "likeButton";
-                        //likeButton.type = "image";
-                        //likeButton.src = "images/TESTheartunfilled.png"
-                        //replyButton.onclick = addReply;
-                        //replyButton.onclick = logvalue;
+                        const likeButton1 = document.createElement("i");
+                        likeButton1.className = "likeButton";
+                        likeButton1.id = reply._id + "likeButton";
+                        likeButton1.value = reply._id;
+                        checkIfLiked(likeButton1);
                         replyDiv.appendChild(currentImage1);
                         replyDiv.appendChild(userDiv1);
                         replyDiv.appendChild(messagediv1);
                         replyDiv.appendChild(replyButton1);
                         replyDiv.appendChild(date2);
-                        replyDiv.appendChild(likeButton);
+                        replyDiv.appendChild(likeButton1);
                         replyDiv.appendChild(linebreak1);
                         var originalDiv = document.getElementById(reply.replyTo._id);
                         insertAfter(replyDiv, originalDiv);
                         
-                        likeButton.onclick = function () {
-                            var likestate = document.getElementById(this.id)
-                            likestate.classList.toggle("likeButtonFilled");   
-                        }  
-
                         replyButton1.onclick = function () {
                             var commentid = this.value;
                             var originalDiv = document.getElementById(commentid);
-                            console.log(originalDiv);
                             var textBox = document.createElement('input');
                             var submitButton = document.createElement('button');
                             submitButton.textContent = "Submit";
                             var newDiv = document.createElement('div');
                             newDiv.appendChild(textBox);
                             newDiv.appendChild(submitButton);
-                            console.log(newDiv);
                             insertAfter(newDiv,originalDiv);
                             submitButton.addEventListener('click', function() {
                             var text = document.createElement('div');
-                            //text.className = "inputText";
-                            var userName = document.getElementsByClassName('message123')
-                            text.textContent = "@" + userName[0].textContent + " "+  textBox.value;
+                            text.id = "inputText";
+                            text.textContent = textBox.value;
                             var userName = document.createElement('div');
-                            //userName.id="replyUserName"
                             userName.textContent = JSON.parse(currentUser).userName;
                             var finalDiv = document.createElement('div');
-                            finalDiv.className="replydiv1"; 
                             finalDiv.appendChild(userName);
                             finalDiv.appendChild(text);
                             insertAfter(finalDiv, originalDiv)
-                            var comment = textBox.value;
                             newDiv.remove();
                             var url = document.getElementById('url').value;
                             var userName = originalDiv.getElementsByClassName('message123');
                             var reply = {
-                                "comment": comment,
+                                "comment": document.getElementById('inputText').textContent,
                                 "url": url,
                                 "user": JSON.parse(currentUser),
                                 "isReply" : true,
@@ -370,9 +377,23 @@ const displayCommentsAtURL = () => {
                             addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
                             addReplyToParent.send();
                             
-        
+                        
                             });
-                        }
+                        };
+                        likeButton1.onclick = function () {
+                            var likestate = document.getElementById(this.id)
+                            likestate.classList.toggle("likeButtonFilled");  
+                            if(likestate.className == "likeButton likeButtonFilled"){
+                                const likeRequest = new XMLHttpRequest();
+                                likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                                likeRequest.send();
+                            }
+                            else{
+                                const disLikeRequest = new XMLHttpRequest();
+                                disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                                disLikeRequest.send();
+                            }
+                        }  
                         }
                         
                     }
@@ -380,7 +401,6 @@ const displayCommentsAtURL = () => {
               
 
                 
-                //document.getElementById('replybutton').addEventListener("click", logvalue)
             }
         }
     }
@@ -427,4 +447,64 @@ var mongoObjectId = function () {
 
 function insertAfter(el, referenceNode) {
     referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+}
+
+const createReply = () => {
+    var commentid = this.value;
+    var originalDiv = document.getElementById(commentid);
+    var textBox = document.createElement('input');
+    var submitButton = document.createElement('button');
+    submitButton.textContent = "Submit";
+    var newDiv = document.createElement('div');
+    newDiv.appendChild(textBox);
+    newDiv.appendChild(submitButton);
+    insertAfter(newDiv,originalDiv);
+    submitButton.addEventListener('click', function() {
+    var text = document.createElement('div');
+    text.id = "inputText";
+    text.textContent = textBox.value;
+    var userName = document.createElement('div');
+    userName.textContent = JSON.parse(currentUser).userName;
+    var finalDiv = document.createElement('div');
+    finalDiv.appendChild(userName);
+    finalDiv.appendChild(text);
+    insertAfter(finalDiv, originalDiv)
+    newDiv.remove();
+    var url = document.getElementById('url').value;
+    var userName = originalDiv.getElementsByClassName('message123');
+    var reply = {
+        "comment": document.getElementById('inputText').textContent,
+        "url": url,
+        "user": JSON.parse(currentUser),
+        "isReply" : true,
+        "replyTo" : {
+            "userName" : userName[0].textContent,
+            "_id" : commentid
+        },
+        "_id" : mongoObjectId()
+    }
+    var replyRequest = new XMLHttpRequest();
+    replyRequest.open('POST', 'http://localhost:5000/add');
+    replyRequest.setRequestHeader('Content-Type', 'application/json');
+    replyRequest.send(JSON.stringify(reply));
+    var addReplyToParent = new XMLHttpRequest();
+    addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
+    addReplyToParent.send();
+    
+
+    });
+}
+
+const checkIfLiked = (like) => {
+    const checkIfLiked = new XMLHttpRequest();
+    console.log(JSON.parse(currentUser));
+    checkIfLiked.open('GET', 'http://localhost:5000/likes/userLiked/' + like.value + "/" + JSON.parse(currentUser)._id);
+    checkIfLiked.onload = function() {
+        console.log(checkIfLiked.response);
+        if(checkIfLiked.response == 'true'){
+            document.getElementById(like.id).classList.toggle("likeButtonFilled");
+            console.log(document.getElementById(like.id).className);
+        }
+    }
+    checkIfLiked.send();
 }

@@ -10,6 +10,7 @@ router.patch('/addLike/:commentID/:userID', async (req,res) => {
     const comment = await Comments.findById(req.params.commentID);
     //const user = await User.findById(req.params.userID);
     var newLikes = comment.likes;
+    console.log('hi');
     if(newLikes.includes(req.params.userID)){
         res.send('already liked');
     }
@@ -18,6 +19,7 @@ router.patch('/addLike/:commentID/:userID', async (req,res) => {
     Comments.update({_id : req.params.commentID}, {$set : {likes : newLikes}})
         .exec()
         .then(result => {
+            console.log(result);
             res.json(result);
         })
     } 
@@ -35,6 +37,23 @@ router.get('/userLiked/:commentID/:userID', async(req, res) => {
         }
    } 
    res.send(userLiked);
+});
+
+router.patch('/dislike/:commentID/:userID', async(req,res) => {
+    const comment = await Comments.findById(req.params.commentID);
+    var newLikes = comment.likes;
+    if(!newLikes.includes(req.params.userID)){
+        res.send('havent liked');
+    }
+    else{
+        var pos = newLikes.indexOf(req.params.userID);
+        newLikes.splice(pos, 1);
+        Comments.update({_id : req.params.commentID},  {$set : {likes : newLikes}})
+            .exec()
+            .then(result => {
+                res.json(result);
+            })
+    }
 });
 
 module.exports = router;
