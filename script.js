@@ -2,7 +2,6 @@
 
 
 
-
 var currentUser = "";
 var count = 0;
 window.onload = function () {
@@ -52,7 +51,7 @@ window.onload = function () {
         const div = document.createElement('div');
         div.className = 'commentDiv';
         div.id = addComment._id;
-        console.log(div.id);
+        //console.log(div.id);
         const currentImage = document.createElement("IMG");
         currentImage.className = "userimage"  
         currentImage.src = addComment.user.thumbnail;     
@@ -87,7 +86,7 @@ window.onload = function () {
         div.appendChild(linebreak);
         document.body.appendChild(div);
 
-        replyButton.onclick = createReply;
+        replyButton.addEventListener('click', createReply(replyButton));
         likeButton.onclick = function () {
             var likestate = document.getElementById(this.id)
             likestate.classList.toggle("likeButtonFilled");  
@@ -128,7 +127,7 @@ const displayCommentsAtURL = () => {
                 //alert(data.length);
                 //alert(i);
                 if(!data[i].isReply){
-                 const div = document.createElement('div');
+                const div = document.createElement('div');
                 div.id = data[i]._id;
                 div.className = "commentDiv"
                 const userDiv = document.createElement('div');
@@ -152,7 +151,7 @@ const displayCommentsAtURL = () => {
                 const replyButton = document.createElement("button");
                 replyButton.className = "replybutton"
                 replyButton.id = "replybutton" + data[i]._id;
-                replyButton.value = data[i]._id
+                replyButton.value = data[i]._id;
                 replyButton.textContent = "Reply";
                 const likeButton = document.createElement("i");
                 likeButton.className = "likeButton";
@@ -167,8 +166,7 @@ const displayCommentsAtURL = () => {
                 div.appendChild(likeButton);
                 div.appendChild(linebreak);
                 document.body.appendChild(div);
-                //console.log(data[i].replies);
-                replyButton.onclick = createReply;
+                replyButton.addEventListener('click', createReply(replyButton));
                 
                 
                 likeButton.onclick = function () {
@@ -227,7 +225,7 @@ const displayCommentsAtURL = () => {
                         const replyButton1 = document.createElement("button");
                         replyButton1.className = "replybutton"
                         replyButton1.id = "replybutton" +reply._id;
-                        replyButton1.value = reply._id
+                        replyButton1.value = reply._id;
                         replyButton1.textContent = "Reply";
                         const likeButton1 = document.createElement("i");
                         likeButton1.className = "likeButton";
@@ -244,7 +242,7 @@ const displayCommentsAtURL = () => {
                         var originalDiv = document.getElementById(reply.replyTo._id);
                         insertAfter(replyDiv, originalDiv);
                         
-                        replyButton1.onclick = createReply;
+                        replyButton1.addEventListener('click', createReply(replyButton1));
                         likeButton1.onclick = function () {
                             var likestate = document.getElementById(this.id)
                             likestate.classList.toggle("likeButtonFilled");  
@@ -314,8 +312,10 @@ function insertAfter(el, referenceNode) {
     referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
 }
 
-const createReply = () => {
-    var commentid = this.value;
+function createReply(replyButton) {
+    return function(){
+    var commentid = replyButton.value;
+    console.log(commentid);
     var originalDiv = document.getElementById(commentid);
     var textBox = document.createElement('input');
     var submitButton = document.createElement('button');
@@ -358,6 +358,8 @@ const createReply = () => {
     
 
     });
+    }
+    
 }
 
 const checkIfLiked = (like) => {
