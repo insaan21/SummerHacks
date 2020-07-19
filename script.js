@@ -18,7 +18,7 @@ window.onload = function () {
 
     //get current user ID
     var loginRequest2 = new XMLHttpRequest();
-    loginRequest2.open('GET', 'http:localhost:5000/profile');
+    loginRequest2.open('GET', 'http:localhost:5000/profile', false);
     loginRequest2.onload = async function () {
         currentUser = await loginRequest2.responseText;
     }
@@ -50,7 +50,7 @@ window.onload = function () {
 
         //displayNewComment
         const div = document.createElement('div');
-        div.className = 'message123';
+        div.className = 'commentDiv';
         div.id = addComment._id;
         console.log(div.id);
         const currentImage = document.createElement("IMG");
@@ -75,14 +75,33 @@ window.onload = function () {
         replyButton.value = addComment._id;
         console.log(replyButton.value);
         replyButton.textContent = "Reply";
+        const likeButton = document.createElement("i");
+        likeButton.className = "likeButton";
+        likeButton.id = addComment._id + "likeButton";
+        likeButton.value = addComment._id;
         div.appendChild(currentImage);
         div.appendChild(messagediv);
         div.appendChild(replyButton);
         div.appendChild(date);
+        div.appendChild(likeButton);
         div.appendChild(linebreak);
         document.body.appendChild(div);
 
         replyButton.onclick = createReply;
+        likeButton.onclick = function () {
+            var likestate = document.getElementById(this.id)
+            likestate.classList.toggle("likeButtonFilled");  
+            if(likestate.className == "likeButton likeButtonFilled"){
+                const likeRequest = new XMLHttpRequest();
+                likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                likeRequest.send();
+            }
+            else{
+                const disLikeRequest = new XMLHttpRequest();
+                disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                disLikeRequest.send();
+            }
+        }  
     }
 
     //logout
@@ -111,6 +130,7 @@ const displayCommentsAtURL = () => {
                 if(!data[i].isReply){
                  const div = document.createElement('div');
                 div.id = data[i]._id;
+                div.className = "commentDiv"
                 const userDiv = document.createElement('div');
                 userDiv.className = 'message123';
                 userDiv.textContent = data[i].user.userName 
@@ -134,17 +154,37 @@ const displayCommentsAtURL = () => {
                 replyButton.id = "replybutton" + data[i]._id;
                 replyButton.value = data[i]._id
                 replyButton.textContent = "Reply";
-                //replyButton.onclick = addReply;
-                //replyButton.onclick = logvalue;
+                const likeButton = document.createElement("i");
+                likeButton.className = "likeButton";
+                likeButton.id = data[i]._id + "likeButton";
+                likeButton.value = data[i]._id;
+                checkIfLiked(likeButton);
                 div.appendChild(currentImage);
                 div.appendChild(userDiv);
                 div.appendChild(messagediv);
                 div.appendChild(replyButton);
                 div.appendChild(date);
+                div.appendChild(likeButton);
                 div.appendChild(linebreak);
                 document.body.appendChild(div);
                 //console.log(data[i].replies);
                 replyButton.onclick = createReply;
+                
+                
+                likeButton.onclick = function () {
+                    var likestate = document.getElementById(this.id)
+                    likestate.classList.toggle("likeButtonFilled");  
+                    if(likestate.className == "likeButton likeButtonFilled"){
+                        const likeRequest = new XMLHttpRequest();
+                        likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                        likeRequest.send();
+                    }
+                    else{
+                        const disLikeRequest = new XMLHttpRequest();
+                        disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                        disLikeRequest.send();
+                    }
+                }  
             }
                 
 
@@ -165,6 +205,7 @@ const displayCommentsAtURL = () => {
                         var reply = replies[j];
                         var replyDiv = document.createElement('div');
                         replyDiv.id = reply._id;
+                        replyDiv.className = "commentDiv"
                         const userDiv1 = document.createElement('div');
                         userDiv1.className = 'message123';
                         userDiv1.textContent = reply.user.userName 
@@ -188,18 +229,36 @@ const displayCommentsAtURL = () => {
                         replyButton1.id = "replybutton" +reply._id;
                         replyButton1.value = reply._id
                         replyButton1.textContent = "Reply";
-                        //replyButton.onclick = addReply;
-                        //replyButton.onclick = logvalue;
+                        const likeButton1 = document.createElement("i");
+                        likeButton1.className = "likeButton";
+                        likeButton1.id = reply._id + "likeButton";
+                        likeButton1.value = reply._id;
+                        checkIfLiked(likeButton1);
                         replyDiv.appendChild(currentImage1);
                         replyDiv.appendChild(userDiv1);
                         replyDiv.appendChild(messagediv1);
                         replyDiv.appendChild(replyButton1);
                         replyDiv.appendChild(date2);
+                        replyDiv.appendChild(likeButton1);
                         replyDiv.appendChild(linebreak1);
                         var originalDiv = document.getElementById(reply.replyTo._id);
                         insertAfter(replyDiv, originalDiv);
                         
                         replyButton1.onclick = createReply;
+                        likeButton1.onclick = function () {
+                            var likestate = document.getElementById(this.id)
+                            likestate.classList.toggle("likeButtonFilled");  
+                            if(likestate.className == "likeButton likeButtonFilled"){
+                                const likeRequest = new XMLHttpRequest();
+                                likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                                likeRequest.send();
+                            }
+                            else{
+                                const disLikeRequest = new XMLHttpRequest();
+                                disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                                disLikeRequest.send();
+                            }
+                        }  
                         }
                         
                     }
@@ -207,7 +266,6 @@ const displayCommentsAtURL = () => {
               
 
                 
-                //document.getElementById('replybutton').addEventListener("click", logvalue)
             }
         }
     }
@@ -259,7 +317,6 @@ function insertAfter(el, referenceNode) {
 const createReply = () => {
     var commentid = this.value;
     var originalDiv = document.getElementById(commentid);
-    console.log(originalDiv);
     var textBox = document.createElement('input');
     var submitButton = document.createElement('button');
     submitButton.textContent = "Submit";
@@ -301,4 +358,18 @@ const createReply = () => {
     
 
     });
+}
+
+const checkIfLiked = (like) => {
+    const checkIfLiked = new XMLHttpRequest();
+    console.log(JSON.parse(currentUser));
+    checkIfLiked.open('GET', 'http://localhost:5000/likes/userLiked/' + like.value + "/" + JSON.parse(currentUser)._id);
+    checkIfLiked.onload = function() {
+        console.log(checkIfLiked.response);
+        if(checkIfLiked.response == 'true'){
+            document.getElementById(like.id).classList.toggle("likeButtonFilled");
+            console.log(document.getElementById(like.id).className);
+        }
+    }
+    checkIfLiked.send();
 }
