@@ -76,13 +76,22 @@ window.onload = function () {
         replyButton.value = addComment._id;
         console.log(replyButton.value);
         replyButton.textContent = "Reply";
+        const likeButton = document.createElement("i");
+        likeButton.className = "likeButton";
+        likeButton.id = addComment._id + "likeButton";
         div.appendChild(currentImage);
         div.appendChild(messagediv);
         div.appendChild(replyButton);
         div.appendChild(date);
+        div.appendChild(likeButton);
         div.appendChild(linebreak);
         document.body.appendChild(div);
 
+        likeButton.onclick = function () {
+            var likestate = document.getElementById(this.id)
+            likestate.classList.toggle("likeButtonFilled");   
+        }    
+        
         replyButton.onclick = function () {
             var commentid = this.value;
             var originalDiv = document.getElementById(commentid);
@@ -99,6 +108,7 @@ window.onload = function () {
             var userName = document.createElement('div');
             userName.textContent = JSON.parse(currentUser).userName;
             var finalDiv = document.createElement('div');
+            finalDiv.className="replydiv1"
             finalDiv.appendChild(userName);
             finalDiv.appendChild(text);
             insertAfter(finalDiv, originalDiv)
@@ -149,6 +159,7 @@ const displayCommentsAtURL = () => {
                 if(!data[i].isReply){
                  const div = document.createElement('div');
                 div.id = data[i]._id;
+                div.className = "commentDiv"
                 const userDiv = document.createElement('div');
                 userDiv.className = 'message123';
                 userDiv.textContent = data[i].user.userName 
@@ -172,6 +183,11 @@ const displayCommentsAtURL = () => {
                 replyButton.id = "replybutton" + data[i]._id;
                 replyButton.value = data[i]._id
                 replyButton.textContent = "Reply";
+                const likeButton = document.createElement("i");
+                likeButton.className = "likeButton";
+                likeButton.id = data[i]._id + "likeButton";
+                //likeButton.type = "image";
+                //likeButton.src = "images/TESTheartunfilled.png"
                 //replyButton.onclick = addReply;
                 //replyButton.onclick = logvalue;
                 div.appendChild(currentImage);
@@ -179,11 +195,16 @@ const displayCommentsAtURL = () => {
                 div.appendChild(messagediv);
                 div.appendChild(replyButton);
                 div.appendChild(date);
+                div.appendChild(likeButton);
                 div.appendChild(linebreak);
                 document.body.appendChild(div);
                 //console.log(data[i].replies);
+                
+                likeButton.onclick = function () {
+                    var likestate = document.getElementById(this.id)
+                    likestate.classList.toggle("likeButtonFilled");   
+                }  
 
-                  
                 replyButton.onclick = function () {
                     var commentid = this.value;
                     var originalDiv = document.getElementById(commentid);
@@ -200,8 +221,10 @@ const displayCommentsAtURL = () => {
                     text.id = "inputText";
                     text.textContent = textBox.value;
                     var userName = document.createElement('div');
+                    //userName.className="replyUserName"
                     userName.textContent = JSON.parse(currentUser).userName;
                     var finalDiv = document.createElement('div');
+                    finalDiv.className="replydiv1";
                     finalDiv.appendChild(userName);
                     finalDiv.appendChild(text);
                     insertAfter(finalDiv, originalDiv)
@@ -250,6 +273,7 @@ const displayCommentsAtURL = () => {
                         var reply = replies[j];
                         var replyDiv = document.createElement('div');
                         replyDiv.id = reply._id;
+                        replyDiv.className = "commentDiv"
                         const userDiv1 = document.createElement('div');
                         userDiv1.className = 'message123';
                         userDiv1.textContent = reply.user.userName 
@@ -273,6 +297,11 @@ const displayCommentsAtURL = () => {
                         replyButton1.id = "replybutton" +reply._id;
                         replyButton1.value = reply._id
                         replyButton1.textContent = "Reply";
+                        const likeButton = document.createElement("i");
+                        likeButton.className = "likeButton";
+                        likeButton.id = reply._id + "likeButton";
+                        //likeButton.type = "image";
+                        //likeButton.src = "images/TESTheartunfilled.png"
                         //replyButton.onclick = addReply;
                         //replyButton.onclick = logvalue;
                         replyDiv.appendChild(currentImage1);
@@ -280,10 +309,16 @@ const displayCommentsAtURL = () => {
                         replyDiv.appendChild(messagediv1);
                         replyDiv.appendChild(replyButton1);
                         replyDiv.appendChild(date2);
+                        replyDiv.appendChild(likeButton);
                         replyDiv.appendChild(linebreak1);
                         var originalDiv = document.getElementById(reply.replyTo._id);
                         insertAfter(replyDiv, originalDiv);
                         
+                        likeButton.onclick = function () {
+                            var likestate = document.getElementById(this.id)
+                            likestate.classList.toggle("likeButtonFilled");   
+                        }  
+
                         replyButton1.onclick = function () {
                             var commentid = this.value;
                             var originalDiv = document.getElementById(commentid);
@@ -298,12 +333,14 @@ const displayCommentsAtURL = () => {
                             insertAfter(newDiv,originalDiv);
                             submitButton.addEventListener('click', function() {
                             var text = document.createElement('div');
-                            text.id = "inputText";
+                            //text.className = "inputText";
                             var userName = document.getElementsByClassName('message123')
                             text.textContent = "@" + userName[0].textContent + " "+  textBox.value;
                             var userName = document.createElement('div');
+                            //userName.id="replyUserName"
                             userName.textContent = JSON.parse(currentUser).userName;
                             var finalDiv = document.createElement('div');
+                            finalDiv.className="replydiv1"; 
                             finalDiv.appendChild(userName);
                             finalDiv.appendChild(text);
                             insertAfter(finalDiv, originalDiv)
