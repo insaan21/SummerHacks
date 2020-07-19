@@ -50,14 +50,16 @@ window.onload = function () {
         request1.send(JSON.stringify(addComment));
 
         //displayNewComment
-        const div = document.createElement('div');
-        div.className = 'message123';
+        const div = document.createElement('div')
         div.id = addComment._id;
+        div.className = "commentDiv"
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message123';
+        userDiv.textContent = addComment.user.userName 
         console.log(div.id);
         const currentImage = document.createElement("IMG");
         currentImage.className = "userimage"  
-        currentImage.src = addComment.user.thumbnail;     
-        div.textContent = addComment.user.userName + ":" 
+        currentImage.src = addComment.user.thumbnail;      
         const messagediv = document.createElement('div');
         const linebreak = document.createElement("br");
         messagediv.className = 'message321';
@@ -80,6 +82,7 @@ window.onload = function () {
         likeButton.className = "likeButton";
         likeButton.id = addComment._id + "likeButton";
         div.appendChild(currentImage);
+        div.appendChild(userDiv);
         div.appendChild(messagediv);
         div.appendChild(replyButton);
         div.appendChild(date);
@@ -157,7 +160,7 @@ const displayCommentsAtURL = () => {
                 //alert(data.length);
                 //alert(i);
                 if(!data[i].isReply){
-                 const div = document.createElement('div');
+                const div = document.createElement('div');
                 div.id = data[i]._id;
                 div.className = "commentDiv"
                 const userDiv = document.createElement('div');
