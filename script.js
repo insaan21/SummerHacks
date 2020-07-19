@@ -3,7 +3,6 @@
 
 
 
-
 var currentUser = "";
 var count = 0;
 window.onload = function () {
@@ -83,44 +82,7 @@ window.onload = function () {
         div.appendChild(linebreak);
         document.body.appendChild(div);
 
-        replyButton.onclick = function () {
-            var commentid = this.value;
-            var originalDiv = document.getElementById(commentid);
-            var textBox = document.createElement('input');
-            var submitButton = document.createElement('button');
-            submitButton.textContent = "Submit";
-            var newDiv = document.createElement('div');
-            newDiv.appendChild(textBox);
-            newDiv.appendChild(submitButton);
-            insertAfter(newDiv,originalDiv);
-            submitButton.addEventListener('click', function() {
-            var text = document.createElement('div');
-            text.textContent = textBox.value;
-            var userName = document.createElement('div');
-            userName.textContent = JSON.parse(currentUser).userName;
-            var finalDiv = document.createElement('div');
-            finalDiv.appendChild(userName);
-            finalDiv.appendChild(text);
-            insertAfter(finalDiv, originalDiv)
-            newDiv.remove();
-            var url = document.getElementById('url').value;
-                    var reply = {
-                        "comment": document.getElementById('inputText').textContent,
-                        "url": url,
-                        "user": JSON.parse(currentUser),
-                        "isReply" : true,
-                        "replyTo" : JSON.parse(currentUser).userName,
-                        "_id" : mongoObjectId()
-                    }
-                    var replyRequest = new XMLHttpRequest();
-                    replyRequest.open('POST', 'http://localhost:5000/add');
-                    replyRequest.setRequestHeader('Content-Type', 'application/json');
-                    replyRequest.send(JSON.stringify(reply));
-                    var addReplyToParent = new XMLHttpRequest();
-                    addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
-                    addReplyToParent.send();
-            });
-        }
+        replyButton.onclick = createReply;
     }
 
     //logout
@@ -182,54 +144,7 @@ const displayCommentsAtURL = () => {
                 div.appendChild(linebreak);
                 document.body.appendChild(div);
                 //console.log(data[i].replies);
-
-                  
-                replyButton.onclick = function () {
-                    var commentid = this.value;
-                    var originalDiv = document.getElementById(commentid);
-                    console.log(originalDiv);
-                    var textBox = document.createElement('input');
-                    var submitButton = document.createElement('button');
-                    submitButton.textContent = "Submit";
-                    var newDiv = document.createElement('div');
-                    newDiv.appendChild(textBox);
-                    newDiv.appendChild(submitButton);
-                    insertAfter(newDiv,originalDiv);
-                    submitButton.addEventListener('click', function() {
-                    var text = document.createElement('div');
-                    text.id = "inputText";
-                    text.textContent = textBox.value;
-                    var userName = document.createElement('div');
-                    userName.textContent = JSON.parse(currentUser).userName;
-                    var finalDiv = document.createElement('div');
-                    finalDiv.appendChild(userName);
-                    finalDiv.appendChild(text);
-                    insertAfter(finalDiv, originalDiv)
-                    newDiv.remove();
-                    var url = document.getElementById('url').value;
-                    var userName = originalDiv.getElementsByClassName('message123');
-                    var reply = {
-                        "comment": document.getElementById('inputText').textContent,
-                        "url": url,
-                        "user": JSON.parse(currentUser),
-                        "isReply" : true,
-                        "replyTo" : {
-                            "userName" : userName[0].textContent,
-                            "_id" : commentid
-                        },
-                        "_id" : mongoObjectId()
-                    }
-                    var replyRequest = new XMLHttpRequest();
-                    replyRequest.open('POST', 'http://localhost:5000/add');
-                    replyRequest.setRequestHeader('Content-Type', 'application/json');
-                    replyRequest.send(JSON.stringify(reply));
-                    var addReplyToParent = new XMLHttpRequest();
-                    addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
-                    addReplyToParent.send();
-                    
-
-                    });
-                }
+                replyButton.onclick = createReply;
             }
                 
 
@@ -243,7 +158,7 @@ const displayCommentsAtURL = () => {
                     if(getReplies.status == 200){
                         replies = JSON.parse(getReplies.response);
                     }
-                    console.log(replies);
+                    //console.log(replies);
                     for (var j = replies.length-1; j>= 0; j--) {
                         //const reply = JSON.parse(getReply.response);
                         //console.log(reply);
@@ -284,55 +199,7 @@ const displayCommentsAtURL = () => {
                         var originalDiv = document.getElementById(reply.replyTo._id);
                         insertAfter(replyDiv, originalDiv);
                         
-                        replyButton1.onclick = function () {
-                            var commentid = this.value;
-                            var originalDiv = document.getElementById(commentid);
-                            console.log(originalDiv);
-                            var textBox = document.createElement('input');
-                            var submitButton = document.createElement('button');
-                            submitButton.textContent = "Submit";
-                            var newDiv = document.createElement('div');
-                            newDiv.appendChild(textBox);
-                            newDiv.appendChild(submitButton);
-                            console.log(newDiv);
-                            insertAfter(newDiv,originalDiv);
-                            submitButton.addEventListener('click', function() {
-                            var text = document.createElement('div');
-                            text.id = "inputText";
-                            var userName = document.getElementsByClassName('message123')
-                            text.textContent = "@" + userName[0].textContent + " "+  textBox.value;
-                            var userName = document.createElement('div');
-                            userName.textContent = JSON.parse(currentUser).userName;
-                            var finalDiv = document.createElement('div');
-                            finalDiv.appendChild(userName);
-                            finalDiv.appendChild(text);
-                            insertAfter(finalDiv, originalDiv)
-                            var comment = textBox.value;
-                            newDiv.remove();
-                            var url = document.getElementById('url').value;
-                            var userName = originalDiv.getElementsByClassName('message123');
-                            var reply = {
-                                "comment": comment,
-                                "url": url,
-                                "user": JSON.parse(currentUser),
-                                "isReply" : true,
-                                "replyTo" : {
-                                    "userName" : userName[0].textContent,
-                                    "_id" : commentid
-                                },
-                                "_id" : mongoObjectId()
-                            }
-                            var replyRequest = new XMLHttpRequest();
-                            replyRequest.open('POST', 'http://localhost:5000/add');
-                            replyRequest.setRequestHeader('Content-Type', 'application/json');
-                            replyRequest.send(JSON.stringify(reply));
-                            var addReplyToParent = new XMLHttpRequest();
-                            addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
-                            addReplyToParent.send();
-                            
-        
-                            });
-                        }
+                        replyButton1.onclick = createReply;
                         }
                         
                     }
@@ -387,4 +254,51 @@ var mongoObjectId = function () {
 
 function insertAfter(el, referenceNode) {
     referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+}
+
+const createReply = () => {
+    var commentid = this.value;
+    var originalDiv = document.getElementById(commentid);
+    console.log(originalDiv);
+    var textBox = document.createElement('input');
+    var submitButton = document.createElement('button');
+    submitButton.textContent = "Submit";
+    var newDiv = document.createElement('div');
+    newDiv.appendChild(textBox);
+    newDiv.appendChild(submitButton);
+    insertAfter(newDiv,originalDiv);
+    submitButton.addEventListener('click', function() {
+    var text = document.createElement('div');
+    text.id = "inputText";
+    text.textContent = textBox.value;
+    var userName = document.createElement('div');
+    userName.textContent = JSON.parse(currentUser).userName;
+    var finalDiv = document.createElement('div');
+    finalDiv.appendChild(userName);
+    finalDiv.appendChild(text);
+    insertAfter(finalDiv, originalDiv)
+    newDiv.remove();
+    var url = document.getElementById('url').value;
+    var userName = originalDiv.getElementsByClassName('message123');
+    var reply = {
+        "comment": document.getElementById('inputText').textContent,
+        "url": url,
+        "user": JSON.parse(currentUser),
+        "isReply" : true,
+        "replyTo" : {
+            "userName" : userName[0].textContent,
+            "_id" : commentid
+        },
+        "_id" : mongoObjectId()
+    }
+    var replyRequest = new XMLHttpRequest();
+    replyRequest.open('POST', 'http://localhost:5000/add');
+    replyRequest.setRequestHeader('Content-Type', 'application/json');
+    replyRequest.send(JSON.stringify(reply));
+    var addReplyToParent = new XMLHttpRequest();
+    addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
+    addReplyToParent.send();
+    
+
+    });
 }
