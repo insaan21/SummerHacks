@@ -18,4 +18,8 @@ router.get('/', authCheck, (req, res) =>{
     res.send(req.user); 
 });
 
+router.get('/getProfile', (req, res) => {
+    res.render('profile' , {user : req.user});
+});
+
 module.exports = router;

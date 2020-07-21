@@ -1,5 +1,4 @@
 //file that runs every time chrome extension is loaded
-
 var currentUser = "";
 var count = 0;
 window.onload = function () {
@@ -23,7 +22,7 @@ window.onload = function () {
 
     //display all the comments currently on the page
     displayCommentsAtURL();
-    displayUserComments();
+    //displayUserComments();
 
     //when user makes a new comment
     document.getElementById('save').onclick = function () {
@@ -125,6 +124,14 @@ window.onload = function () {
         var logoutRequest = new XMLHttpRequest();
         logoutRequest.open('GET', 'http://localhost:5000/auth/logout');
         logoutRequest.send();
+    }
+
+    document.getElementById('profile').onclick = function() {
+        var profileRequest = new XMLHttpRequest();
+        profileRequest.open('GET', 'http://localhost:5000/profile/getProfile');
+        profileRequest.setRequestHeader('Content-Type', 'application/json');
+        profileRequest.send(JSON.stringify(currentUser));
+        chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
     }
 
 
