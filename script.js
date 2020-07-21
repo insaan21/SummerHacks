@@ -1,7 +1,5 @@
 //file that runs every time chrome extension is loaded
 
-
-
 var currentUser = "";
 var count = 0;
 window.onload = function () {
@@ -193,12 +191,7 @@ const displayCommentsAtURL = () => {
                 if(data[i].replies.length != 0){
                     //console.log('hello');
                     var replies = [];
-                    var getReplies = new XMLHttpRequest();
-                    getReplies.open('GET', 'http://localhost:5000/get/allReplies/' + data[i]._id, false);
-                    getReplies.send();
-                    if(getReplies.status == 200){
-                        replies = JSON.parse(getReplies.response);
-                    }
+                    replies = getReplies(data[i]);
                     //console.log(replies);
                     for (var j = replies.length-1; j>= 0; j--) {
                         //const reply = JSON.parse(getReply.response);
@@ -377,4 +370,11 @@ const checkIfLiked = (like) => {
         }
     }
     checkIfLiked.send();
+}
+
+const getReplies = (data) => {
+    var getReplies = new XMLHttpRequest();
+    getReplies.open('GET', 'http://localhost:5000/get/allReplies/' + data._id);
+    getReplies.send();
+    return JSON.parse(getReplies.response);
 }
