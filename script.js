@@ -80,12 +80,19 @@ window.onload = function () {
         likeButton.className = "likeButton";
         likeButton.id = addComment._id + "likeButton";
         likeButton.value = addComment._id;
+        console.log (addComment.likes);
+        const likeNumber = document.createElement('div');
+        likeNumber.id = "likeNumber" + addComment._id; 
+        likeNumber.className = "likeNumber";
+        var numberLikes = "0";
+        likeNumber.innerHTML = numberLikes;
         div.appendChild(currentImage);
         div.appendChild(userDiv);
         div.appendChild(messagediv);
         div.appendChild(replyButton);
         div.appendChild(date);
         div.appendChild(likeButton);
+        div.appendChild(likeNumber);
         div.appendChild(linebreak);
         document.body.appendChild(div);
 
@@ -97,11 +104,20 @@ window.onload = function () {
                 const likeRequest = new XMLHttpRequest();
                 likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
                 likeRequest.send();
+                var likeString = document.getElementById("likeNumber" + this.value).innerHTML;
+                var likeNumber = parseInt(likeString, 10);
+                var numberLikesUpdate = likeNumber + 1;
+                document.getElementById("likeNumber" + this.value).innerHTML = numberLikesUpdate;
+                        
             }
             else{
                 const disLikeRequest = new XMLHttpRequest();
                 disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
                 disLikeRequest.send();
+                var likeString2 = document.getElementById("likeNumber" + this.value).innerHTML;
+                var likeNumber2 = parseInt(likeString2, 10);
+                var numberLikesUpdate2 = likeNumber2 - 1;
+                document.getElementById("likeNumber" + this.value).innerHTML = numberLikesUpdate2;
             }
         }  
     }
@@ -160,6 +176,13 @@ const displayCommentsAtURL = () => {
                 likeButton.className = "likeButton";
                 likeButton.id = data[i]._id + "likeButton";
                 likeButton.value = data[i]._id;
+                //likeButton.dataset.likes = data[i].likes
+                const likes = data [i].likes;
+                const likeNumber = document.createElement('div');
+                likeNumber.id = "likeNumber" + data[i]._id; 
+                likeNumber.className = "likeNumber";
+                var numberLikes = likes.length;
+                likeNumber.innerHTML = numberLikes;
                 checkIfLiked(likeButton);
                 div.appendChild(currentImage);
                 div.appendChild(userDiv);
@@ -167,6 +190,7 @@ const displayCommentsAtURL = () => {
                 div.appendChild(replyButton);
                 div.appendChild(date);
                 div.appendChild(likeButton);
+                div.appendChild(likeNumber);
                 div.appendChild(linebreak);
                 document.body.appendChild(div);
                 replyButton.addEventListener('click', createReply(replyButton));
@@ -179,11 +203,20 @@ const displayCommentsAtURL = () => {
                         const likeRequest = new XMLHttpRequest();
                         likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
                         likeRequest.send();
+                        var likeString = document.getElementById("likeNumber" + this.value).innerHTML;
+                        var likeNumber = parseInt(likeString, 10);
+                        var numberLikesUpdate = likeNumber + 1;
+                        document.getElementById("likeNumber" + this.value).innerHTML = numberLikesUpdate;
+                        
                     }
                     else{
                         const disLikeRequest = new XMLHttpRequest();
                         disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
                         disLikeRequest.send();
+                        var likeString2 = document.getElementById("likeNumber" + this.value).innerHTML;
+                        var likeNumber2 = parseInt(likeString2, 10);
+                        var numberLikesUpdate2 = likeNumber2 - 1;
+                        document.getElementById("likeNumber" + this.value).innerHTML = numberLikesUpdate2;
                     }
                 }  
             }
@@ -234,6 +267,13 @@ const displayCommentsAtURL = () => {
                         likeButton1.className = "likeButton";
                         likeButton1.id = reply._id + "likeButton";
                         likeButton1.value = reply._id;
+                        const likes = reply.likes;
+                        const likeNumber = document.createElement('div');
+                        likeNumber.className = "likeNumber";
+                        likeNumber.id = "likeNumber" + reply._id; 
+                        //var lengthString = likes.length.toString(10);
+                        var numberLikes = likes.length
+                        likeNumber.innerHTML = numberLikes;
                         checkIfLiked(likeButton1);
                         replyDiv.appendChild(currentImage1);
                         replyDiv.appendChild(userDiv1);
@@ -241,6 +281,7 @@ const displayCommentsAtURL = () => {
                         replyDiv.appendChild(replyButton1);
                         replyDiv.appendChild(date2);
                         replyDiv.appendChild(likeButton1);
+                        replyDiv.appendChild(likeNumber);
                         replyDiv.appendChild(linebreak1);
                         var originalDiv = document.getElementById(reply.replyTo._id);
                         insertAfter(replyDiv, originalDiv);
@@ -253,11 +294,19 @@ const displayCommentsAtURL = () => {
                                 const likeRequest = new XMLHttpRequest();
                                 likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
                                 likeRequest.send();
+                                var likeString = document.getElementById("likeNumber" + this.value).innerHTML;
+                                var likeNumber = parseInt(likeString, 10);
+                                var numberLikesUpdate = likeNumber + 1;
+                                document.getElementById("likeNumber" + this.value).innerHTML = numberLikesUpdate;
                             }
                             else{
                                 const disLikeRequest = new XMLHttpRequest();
                                 disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
                                 disLikeRequest.send();
+                                var likeString2 = document.getElementById("likeNumber" + this.value).innerHTML;
+                                var likeNumber2 = parseInt(likeString2, 10);
+                                var numberLikesUpdate2 = likeNumber2 - 1;
+                                document.getElementById("likeNumber" + this.value).innerHTML = numberLikesUpdate2;
                             }
                         }  
                         }
@@ -321,9 +370,12 @@ function createReply(replyButton) {
     console.log(commentid);
     var originalDiv = document.getElementById(commentid);
     var textBox = document.createElement('input');
+    textBox.placeholder = "Leave a reply!"
+    textBox.id = "replyTextBox"
     var submitButton = document.createElement('button');
     submitButton.textContent = "Submit";
     var newDiv = document.createElement('div');
+    newDiv.className = "replyInputs"
     newDiv.appendChild(textBox);
     newDiv.appendChild(submitButton);
     insertAfter(newDiv,originalDiv);
