@@ -224,8 +224,12 @@ const displayCommentsAtURL = () => {
                 if(data[i].replies.length != 0){
                     //console.log('hello');
                     var replies = [];
-                    replies = getReplies(data[i]);
-                    //console.log(replies);
+                    var getReplies = new XMLHttpRequest();
+                    getReplies.open('GET', 'http://localhost:5000/get/allReplies/' + data[i]._id, false);
+                    getReplies.send();
+                    if(getReplies.status == 200){
+                        replies = JSON.parse(getReplies.response);
+                    }
                     for (var j = replies.length-1; j>= 0; j--) {
                         //const reply = JSON.parse(getReply.response);
                         //console.log(reply);
