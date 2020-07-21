@@ -384,8 +384,10 @@ function createReply(replyButton) {
     text.id = "inputText";
     text.textContent = textBox.value;
     var userName = document.createElement('div');
+    userName.id = "replyUserName";
     userName.textContent = JSON.parse(currentUser).userName;
     var finalDiv = document.createElement('div');
+    finalDiv.className = "replyDiv2";
     finalDiv.appendChild(userName);
     finalDiv.appendChild(text);
     insertAfter(finalDiv, originalDiv)

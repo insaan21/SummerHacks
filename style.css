@@ -113,13 +113,13 @@ body{
     font-style: fantasy;
   }
 
-.replydiv1 {
+/*.replydiv1 {
     font-size: x-small;
     text-align: left;
     width: 55%;
     margin: 0 auto 10px auto; 
 
-}
+}*/
 
 #replyText {
     font-size: small;
@@ -148,4 +148,15 @@ body{
     grid-area: 3 / 5 / 4 / 6;
     font-size: xx-small;
     margin: auto;
+}
+
+.replyDiv2 {
+    font-size: xx-small;
+    margin-left: 55px;
+    margin-bottom: 15px;
+}
+
+#replyUserName {
+    font-size: x-small;
+    font-weight: bold;
 }
