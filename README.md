@@ -3,12 +3,7 @@ Freetail Hackers SummerHacks Hackathon
 
 Node modules needed:
 ```bash
-npm install express
-npm install cors
-npm install mongoose
-npm install body-parser
-npm install passport
-npm install dotenv
+npm install express cors mongoose body-parser passport dotenv @hapi/joi bcrypt bcryptjs cookie-session ejs express express-flash express-session jsonwebtoken passport-google-oauth20 passport-local
 ```
 To start server
 
@@ -20,7 +15,7 @@ npm start
 To test chrome extension:\
 Go to chrome://extensions.\
 Put yourself in developer mode.\
-Click on load unpacked extensions and load the whole summerhacks folder.\ 
+Click on load unpacked extensions and load the whole summerhacks folder. \ 
 The chrome extension icon should be there with the others.
 
 To test API
