@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
+const User = require('../models/User');
 router.use(cors());
 
 //if not logged in 
@@ -21,5 +22,10 @@ router.get('/', authCheck, (req, res) =>{
 router.get('/getProfile', authCheck, (req, res) => {
     res.render('profile' , {user : req.user});
 });
+
+router.get('/getProfile/:userID', (req,res) => {
+    const currentUser = User.findById(req.params.userID);
+    res.render('profile', {user : currentUser});
+})
 
 module.exports = router;

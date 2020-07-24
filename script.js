@@ -59,7 +59,7 @@ window.onload = function () {
     //when user makes a new comment
     document.getElementById('save').onclick = function () {
         var comment = document.getElementById('comment').value;
-        var name = document.getElementById('name').value;
+        //var name = document.getElementById('name').value;
         var url = document.getElementById('url').value;
         var addComment = {
             "comment": comment,
