@@ -15,10 +15,10 @@ const authCheck = (req, res, next) =>{
 };
 
 router.get('/', authCheck, (req, res) =>{
-    res.send(req.user); 
+    res.send(req.user);
 });
 
-router.get('/getProfile', (req, res) => {
+router.get('/getProfile', authCheck, (req, res) => {
     res.render('profile' , {user : req.user});
 });
 

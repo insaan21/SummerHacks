@@ -4,8 +4,9 @@ const Joi = require('@hapi/joi');
 
 //Register Validation
 const registerValidation = (data) => {
+    //console.log(data);
     const schema = Joi.object({
-        name: Joi.string()
+        userName: Joi.string()
         .min(4)
         .required(),
     
@@ -19,6 +20,7 @@ const registerValidation = (data) => {
         .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
         .required(),
     });
+    console.log(schema.validate(data));
     return schema.validate(data);
 };
 
