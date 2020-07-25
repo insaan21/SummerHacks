@@ -1,16 +1,48 @@
 //file that runs every time chrome extension is loaded
 var currentUser = "";
 var count = 0;
+var googleUser = true;
+var jwtUser = true;
+
+           
 window.onload = function () {
+    
     //checked if logged in 
     var loginRequest1 = new XMLHttpRequest();
-    loginRequest1.open('GET', 'http://localhost:5000/profile');
-    loginRequest1.onload = async function () {
-        if (await loginRequest1.responseText == 'Not logged in') {
-            chrome.tabs.create({ url: 'http://localhost:5000/auth/google' });
+    loginRequest1.open('GET', 'http://localhost:5000/profile', false);
+    loginRequest1.onload =  function () {
+        var response = loginRequest1.responseText;
+        console.log(response);
+        if (response == 'Not logged in') {
+            googleUser = false;
+            console.log(googleUser);
+        }
+        else{
+            currentUser = response;
         }
     }
     loginRequest1.send();
+
+    var jwtloginRequest1 = new XMLHttpRequest();
+    jwtloginRequest1.open('GET', 'http://localhost:5000/api/posts/', false);
+    jwtloginRequest1.onload = function () {
+        var response = jwtloginRequest1.responseText;
+        console.log(response);
+        if (response == 'Not logged in') {
+            jwtUser = false;
+            console.log(jwtUser);
+        }
+        else{
+            currentUser = response;
+        }
+    }
+    jwtloginRequest1.send();
+    console.log(currentUser);
+    console.log(googleUser);
+    console.log(jwtUser);
+    if(!googleUser && !jwtUser){
+        chrome.tabs.create({ url: chrome.runtime.getURL("loginOptions.html") });
+    }
 
     //get current user ID
     var loginRequest2 = new XMLHttpRequest();
@@ -27,7 +59,7 @@ window.onload = function () {
     //when user makes a new comment
     document.getElementById('save').onclick = function () {
         var comment = document.getElementById('comment').value;
-        var name = document.getElementById('name').value;
+        //var name = document.getElementById('name').value;
         var url = document.getElementById('url').value;
         var addComment = {
             "comment": comment,
@@ -127,10 +159,6 @@ window.onload = function () {
     }
 
     document.getElementById('profile').onclick = function() {
-        var profileRequest = new XMLHttpRequest();
-        profileRequest.open('GET', 'http://localhost:5000/profile/getProfile');
-        profileRequest.setRequestHeader('Content-Type', 'application/json');
-        profileRequest.send(JSON.stringify(currentUser));
         chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
     }
 

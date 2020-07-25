@@ -8,8 +8,10 @@ const userSchema = new mongoose.Schema({
 
     //only used for google oAuth(everything else uses the mongoDB ID)
     googleID : {
-        type : String, 
-        required : true
+        type : String
+    },
+    email : {
+        type : String
     },
     //password : {
      //   type : String,
@@ -21,9 +23,12 @@ const userSchema = new mongoose.Schema({
     //profile pic
     thumbnail : {
         type : String,
-        required : true
     },
-
+    password : {
+        type: String,
+        max: 1024,
+        min : 6
+    },
     //might change to make it less specific
     date : {
         type : Date,
@@ -36,6 +41,8 @@ const userSchema = new mongoose.Schema({
     friendRequests : {
         type : Array
     }
+   
+    
     
 });
 
