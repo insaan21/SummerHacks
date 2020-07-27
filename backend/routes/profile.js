@@ -23,9 +23,15 @@ router.get('/getProfile', authCheck, (req, res) => {
     res.render('profile' , {user : req.user});
 });
 
-router.get('/getProfile/:userID', (req,res) => {
-    const currentUser = User.findById(req.params.userID);
-    res.render('profile', {user : currentUser});
+router.get('/getProfile/:userID', async (req,res) => {
+    const isFriends = false;
+    //console.log(req.params.userID);
+    const currentUser = await User.findById(req.params.userID);
+    console.log(currentUser.friends);
+    if(currentUser.friends.includes(req.user._id)){
+        isFriends = true;
+    }
+    res.render('otherUserProfile', {user : currentUser});
 })
 
 module.exports = router;
