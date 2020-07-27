@@ -185,6 +185,7 @@ const displayCommentsAtURL = () => {
                 const userDiv = document.createElement('button');
                 userDiv.className = 'message123';
                 userDiv.value = JSON.stringify(data[i].user);
+                userDiv.id = data[i].user._id
                 userDiv.textContent = data[i].user.userName;
                 const messagediv = document.createElement('div');
                 messagediv.className = 'message321';
@@ -255,13 +256,7 @@ const displayCommentsAtURL = () => {
                 }  
                 
                 userDiv.onclick = function showProfile() {
-                    var profileRequest = new XMLHttpRequest();
-                    profileRequest.open('GET', 'http://localhost:5000/profile/getProfile');
-                    profileRequest.setRequestHeader('Content-Type', 'application/json');
-                    profileRequest.send(this.value);
-                    console.log (this.value);
-                    console.log(typeof this.value);
-                    chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
+                    chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.id});
                 }
 
                 document.getElementById('profile').onclick = function() {
@@ -271,7 +266,7 @@ const displayCommentsAtURL = () => {
                     profileRequest.send(JSON.stringify(currentUser));
                     console.log (JSON.stringify(currentUser));
                     console.log (typeof JSON.stringify(currentUser));
-                    //chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
+                    chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
                 }
             }
                 
