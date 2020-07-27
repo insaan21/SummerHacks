@@ -255,17 +255,11 @@ const displayCommentsAtURL = () => {
                     }
                 }  
                 
-                userDiv.onclick = function showProfile() {
-                    chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.id});
+                userDiv.onclick = async function() {
+                    await chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.id});
                 }
 
                 document.getElementById('profile').onclick = function() {
-                    var profileRequest = new XMLHttpRequest();
-                    profileRequest.open('GET', 'http://localhost:5000/profile/getProfile');
-                    profileRequest.setRequestHeader('Content-Type', 'application/json');
-                    profileRequest.send(JSON.stringify(currentUser));
-                    console.log (JSON.stringify(currentUser));
-                    console.log (typeof JSON.stringify(currentUser));
                     chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
                 }
             }
