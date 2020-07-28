@@ -18,7 +18,7 @@
             text-align: center; 
         }
     </style>
-    <script type = "text/javascript" src = "/profileButtons.js"></script>
+    <script type = "text/javascript" src = "/friendButtons.js"></script>
 </head>
 
 <body>
@@ -30,14 +30,14 @@
             <div class="col-md-4">
                 
                 <div class="text-center">
-                <!--Enter the profile picture here for the chosen account-->
-                <img src="<%= user.thumbnail %>" /><br />
-                <a class="btn btn-primary btn" href="#" role="button">Edit</a>
-
-                <!--Enter the username here-->
-                <h2><%= user.userName%></h2>
-
-                <a class="btn btn-primary btn" href="#" role="button">Edit</a>
+               <% for(friend of friends) {%>
+                <tr>
+                    <td><img src = "<%=friend.thumbnail%>"></td>
+                    <td><a href = <%= "/profile/getProfile/" + friend._id%>><%= friend.userName%></a></td> 
+                    <td><button id = "acceptFriendRequest" value = "<%=friend._id%>">Accept Friend Request</button></td> 
+                    <td><button id = "denyFriendRequest" value = "<%=friend._id%>">Ignore</button></td> 
+                </tr>
+           <% } %>
 
             </div>
         </div>
@@ -59,16 +59,6 @@
             </div>
 
         </div>
-
-        <nav>
-            <ul>
-                <% if (friends) { %>
-                    <button id = "friendRequest" value = "<%= user._id%>">Remove Friend</button>
-                <% } else { %>
-                    <button id = "friendRequest" value = "<%= user._id%>">Add Friend</button>
-                <% } %>
-            </ul>
-        </nav>
 
     </div>
 

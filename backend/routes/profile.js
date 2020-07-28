@@ -30,11 +30,10 @@ router.get('/getProfile/:userID', authCheck, async (req,res) => {
         if(currentUser.friends.includes(req.user._id)){
             isFriends = true;
         }
-        res.render('otherUserProfile', {user : currentUser});
+        res.render('otherUserProfile', {user : currentUser, friends : isFriends});
     } catch (error) {
         console.log(error);
     }
-  
 });
 
 module.exports = router;

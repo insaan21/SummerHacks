@@ -4,6 +4,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const path = require('path');
 app.use(cors());
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
@@ -21,6 +22,8 @@ require('./localpassport-config.js');
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }))
 
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.set('view engine', 'ejs');
 //send cookies
