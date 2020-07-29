@@ -83,6 +83,7 @@ window.onload = function () {
         const userDiv = document.createElement('div');
         userDiv.className = 'message123';
         userDiv.textContent = addComment.user.userName 
+        userDiv.value = addComment.user._id;
         //console.log(div.id);
         const currentImage = document.createElement("IMG");
         currentImage.className = "userimage"  
@@ -149,6 +150,9 @@ window.onload = function () {
                 document.getElementById("likeNumber" + this.value).innerHTML = numberLikesUpdate2;
             }
         }  
+        userDiv.onclick = async function() {
+            await chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.value});
+        }
     }
 
     //logout
@@ -184,8 +188,8 @@ const displayCommentsAtURL = () => {
                 div.className = "commentDiv"
                 const userDiv = document.createElement('button');
                 userDiv.className = 'message123';
-                userDiv.value = JSON.stringify(data[i].user);
-                userDiv.id = data[i].user._id
+                userDiv.value = data[i].user._id;
+                //userDiv.id = data[i].user._id
                 userDiv.textContent = data[i].user.userName;
                 const messagediv = document.createElement('div');
                 messagediv.className = 'message321';
@@ -256,7 +260,7 @@ const displayCommentsAtURL = () => {
                 }  
                 
                 userDiv.onclick = async function() {
-                    await chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.id});
+                    await chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.value});
                 }
 
                 document.getElementById('profile').onclick = function() {
@@ -285,6 +289,7 @@ const displayCommentsAtURL = () => {
                         const userDiv1 = document.createElement('div');
                         userDiv1.className = 'message123';
                         userDiv1.textContent = reply.user.userName 
+                        userDiv1.value = reply.user._id;
                         const messagediv1 = document.createElement('div');
                         messagediv1.className = 'message321';
                         messagediv1.textContent ="@" + "" + reply.replyTo.userName + " " + reply.comment;
@@ -351,6 +356,10 @@ const displayCommentsAtURL = () => {
                                 document.getElementById("likeNumber" + this.value).innerHTML = numberLikesUpdate2;
                             }
                         }  
+
+                        userDiv1.onclick = async function() {
+                            await chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.value});
+                        }
                         }
                         
                     }
