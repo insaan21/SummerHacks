@@ -32,32 +32,24 @@ const checkNotAuth = (req, res, next) => {
 router.post('/register', checkNotAuth, async (req,res) => {
    const {error} = registerValidation(req.body);
    if (error) {
-       console.log('error');
        return res.status(400).send(error.details[0].message);
    }
    //check if dupilcate user
     const emailExist = await User.findOne({email: req.body.email});
     if(emailExist) return res.status(400).send('Email already exists'); 
-    console.log('crazy'); 
     //HASH passwords
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    //console.log(hashedPassword);
-    //console.log(req.body.password);
-    //console.log('hello');
-    //create a new user
    const user = new User({
        userName: req.body.userName,
        email: req.body.email,
-       password: hashedPassword  
+       password: hashedPassword,
+       thumbnail : 'https://banner2.cleanpng.com/20180603/jx/kisspng-user-interface-design-computer-icons-default-stephen-salazar-photography-5b1462e1b19d70.1261504615280626897275.jpg'
    });
-   console.log(user);
    try {
     const savedUser = await user.save();
-    console.log(savedUser);
     res.send({user: user._id});
    }catch(err){
-       console.log(err);
        res.status(400).send(err); 
    } 
 });

@@ -1,3 +1,5 @@
+
+
 window.onload = function() {
     document.getElementById('register').onclick = function() {
         console.log('hello');
@@ -7,17 +9,22 @@ window.onload = function() {
             "email" : document.getElementById('email').value,
             "password" : document.getElementById('password').value
         }
-        console.log(user);
-        var register = new XMLHttpRequest();
-        register.open("POST", "http://localhost:5000/api/user/register");
-        register.setRequestHeader('Content-Type', 'application/json');
-        register.send(JSON.stringify(user));
-        if(register.status == 400){
-            alert(register.status);
-        }
-        else{
-            chrome.tabs.create({ url: 'http://localhost:5000/api/user/loginPage' });
-        }
+        //console.log(user);
+       
+            var register = new XMLHttpRequest();
+            register.open("POST", "http://localhost:5000/api/user/register");
+            register.setRequestHeader('Content-Type', 'application/json');
+            register.onload = function () {
+                if(register.status == 400){
+                    alert(register.responseText);
+                }
+                else{
+                    chrome.tabs.create({ url: 'http://localhost:5000/api/user/loginPage' });
+                }
+            }
+            register.send(JSON.stringify(user));
+      
+       
         
     }
 }

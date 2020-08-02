@@ -10,6 +10,7 @@
     <title>Chrome Comments</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type = "text/css" href="/style.css">
     <style> 
         input[id="comment"]{  
             text-align: center; 
@@ -31,32 +32,23 @@
                 
                 <div class="text-center">
                <% for(friend of friends) {%>
-                <tr>
-                    <td><img src = "<%=friend.thumbnail%>"></td>
-                    <td><a href = <%= "/profile/getProfile/" + friend._id%>><%= friend.userName%></a></td> 
-                    <td><button id = "acceptFriendRequest" value = "<%=friend._id%>">Accept Friend Request</button></td> 
-                    <td><button id = "denyFriendRequest" value = "<%=friend._id%>">Ignore</button></td> 
-                </tr>
+                <div class = "commentDiv"> 
+                    <img src = "<%=friend.thumbnail%>" class = "userimage">
+                    <div class = "message321">
+                        <a href = <%= "/profile/getProfile/" + friend._id%> style="color:white"><%= friend.userName%></a>
+                    </div>
+                    <button id = "acceptFriendRequest" value = "<%=friend._id%>" class = "date">Accept</button> 
+                    <button id = "denyFriendRequest" value = "<%=friend._id%>" class = "replybutton">Ignore</button> 
+
+                </div>
+               
            <% } %>
 
             </div>
         </div>
             <br />
 
-            <div class="col-md-12">
-                <div class="text-center">
-                <hr />
-
-                <p class="lead">
-                    Recent Comments
-                </p>
-                <!--Insert comments from the user's data here once linked to the database storing comments-->
-
-                <hr />
-                <p>Comment 1</p>
-                <p>Comment 2</p>
-            </div>
-            </div>
+          
 
         </div>
 

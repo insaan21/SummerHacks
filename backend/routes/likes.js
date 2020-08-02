@@ -10,7 +10,6 @@ router.patch('/addLike/:commentID/:userID', async (req,res) => {
     const comment = await Comments.findById(req.params.commentID);
     //const user = await User.findById(req.params.userID);
     var newLikes = comment.likes;
-    console.log('hi');
     if(newLikes.includes(req.params.userID)){
         res.send('already liked');
     }

@@ -20,7 +20,6 @@ async function addComment(request, response){
         replyTo : request.body.replyTo,
         _id : request.body._id
     });
-    console.log(comment);
     }
     else {
     comment = new Comments({
@@ -30,7 +29,6 @@ async function addComment(request, response){
         isReply : request.body.isReply,
         _id : request.body._id
     });
-    console.log(comment);
     }
 
     try{

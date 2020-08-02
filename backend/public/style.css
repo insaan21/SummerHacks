@@ -85,10 +85,18 @@ body{
 
 .date {
     grid-area: 4 / 2 / 5 / 4;
+    background-color: transparent;
+    outline: none;
     font-size: x-small;
+    font-weight: bold;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
     color: rgb(158, 158, 158);
     margin-top: auto;
     margin-bottom: auto;
+   
 }
 
 .replybutton {
