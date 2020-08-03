@@ -10,12 +10,32 @@
     <title>Chrome Comments</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
     <style> 
         input[id="comment"]{  
             text-align: center; 
         }
         input[id="name"]{  
             text-align: center; 
+        }
+        img[id="thumbnail"]{
+            border-radius: 50%;
+            display: block;
+            margin-left:auto;
+            margin-right: auto;
+            padding-top: 10px;
+            width: 384px;
+        }
+        div[id="iandu"]{
+            margin-right: auto;
+            margin-left: auto;
+        }
+        button[id="friendRequest"]{
+            margin-left:auto;
+            margin-right: auto;
+        }
+        ul[id="Button"]{
+            padding-inline-start: 0px;
         }
     </style>
     <script type = "text/javascript" src = "/profileButtons.js"></script>
@@ -27,17 +47,27 @@
 
         <div class="row extra_margin">
 
-            <div class="col-md-4">
+            <div id="iandu" class="col-md-4">
                 
                 <div class="text-center">
                 <!--Enter the profile picture here for the chosen account-->
-                <img src="<%= user.thumbnail %>" /><br />
-                <a class="btn btn-primary btn" href="#" role="button">Edit</a>
+                <img id="thumbnail" src="<%= user.thumbnail %>" />
+                <!-- <a class="btn btn-primary btn" href="#" role="button">Edit</a> -->
 
                 <!--Enter the username here-->
-                <h2><%= user.userName%></h2>
+                <h2><%= user.userName%></h2></br>
 
-                <a class="btn btn-primary btn" href="#" role="button">Edit</a>
+                <!-- <a class="btn btn-primary btn" href="#" role="button">Edit</a> -->
+                
+                <nav>
+                    <ul id="Button">
+                        <% if (friends) { %>
+                            <button id = "friendRequest" value = "<%= user._id%>">Remove Friend</button>
+                        <% } else { %>
+                            <button id = "friendRequest" value = "<%= user._id%>">Add Friend</button>
+                        <% } %>
+                    </ul>
+                </nav>
 
             </div>
         </div>
@@ -62,15 +92,7 @@
 
         </div>
 
-        <nav>
-            <ul>
-                <% if (friends) { %>
-                    <button id = "friendRequest" value = "<%= user._id%>">Remove Friend</button>
-                <% } else { %>
-                    <button id = "friendRequest" value = "<%= user._id%>">Add Friend</button>
-                <% } %>
-            </ul>
-        </nav>
+    
 
     </div>
 
