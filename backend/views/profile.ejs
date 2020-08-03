@@ -52,8 +52,10 @@
                 <!--Insert comments from the user's data here once linked to the database storing comments-->
 
                 <hr />
-                <p>Comment 1</p>
-                <p>Comment 2</p>
+                <% for(comment of comments) {%>
+                    <p><%=comment.comment%></p>
+                    <a href = "<%=comment.url%>" >URL</a>
+        <% } %>  
             </div>
             </div>
 

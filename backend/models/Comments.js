@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./User');
+const { ObjectID } = require('mongodb');
 
 const CommentsSchema = mongoose.Schema({
     comment : {
@@ -12,6 +13,10 @@ const CommentsSchema = mongoose.Schema({
     },
     user : {
         type : JSON,
+        required : true
+    },
+    userID : {
+        type : ObjectID,
         required : true
     },
     url : {

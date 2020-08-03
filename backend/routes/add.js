@@ -18,7 +18,8 @@ async function addComment(request, response){
         user : request.body.user,
         isReply : request.body.isReply,
         replyTo : request.body.replyTo,
-        _id : request.body._id
+        _id : request.body._id,
+        userID : request.body.user._id
     });
     }
     else {
@@ -27,7 +28,8 @@ async function addComment(request, response){
         url : request.body.url,
         user : request.body.user,
         isReply : request.body.isReply,
-        _id : request.body._id
+        _id : request.body._id,
+        userID : request.body.user._id
     });
     }
 
