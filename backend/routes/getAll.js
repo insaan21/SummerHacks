@@ -39,6 +39,18 @@ router.get('/allReplies/:commentID', async (req, res) => {
        var replyComment = await Comments.findById(reply);
        allReplies.push(replyComment); 
     }
+    allReplies.sort(function(a, b){
+        return b.likes.length - a.likes.length;
+    });
     res.send(allReplies);
+});
+
+router.get('/allCommentsAtURL/:url', async (req, res) => {
+    const comments = await Comments.find({url : req.params.url, isReply : false});
+   
+    comments.sort(function(a, b){
+        return b.likes.length - a.likes.length;
+    });
+    res.send(comments);
 });
 module.exports = router;

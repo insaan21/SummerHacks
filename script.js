@@ -173,16 +173,13 @@ window.onload = function () {
 //display all comments at URL 
 const displayCommentsAtURL = () => {
     //alert('hello');
+    var url = document.getElementById('url').value;
+    var newURL = url.replace(/\//g, "%2F");
     var request2 = new XMLHttpRequest();
-    request2.open('GET', 'http://localhost:5000/get/all');
+    request2.open('GET', 'http://localhost:5000/get/allCommentsAtURL/' + newURL);
     request2.onload = function () {
-        //alert('hello');
         const data = JSON.parse(request2.response);
         for (var i = 0; i < data.length; i++) {
-            if (data[i].url == document.getElementById('url').value) {
-                //alert(data.length);
-                //alert(i);
-                if(!data[i].isReply){
                 const div = document.createElement('div');
                 div.id = data[i]._id;
                 div.className = "commentDiv"
@@ -266,7 +263,7 @@ const displayCommentsAtURL = () => {
                 document.getElementById('profile').onclick = function() {
                     chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
                 }
-            }
+            
                 
 
 
@@ -369,9 +366,9 @@ const displayCommentsAtURL = () => {
                 
             }
         }
-    }
     request2.send();
-}
+    }
+
 
 
 //display user comments at URL
