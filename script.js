@@ -180,6 +180,7 @@ const displayCommentsAtURL = () => {
     request2.onload = function () {
         const data = JSON.parse(request2.response);
         for (var i = 0; i < data.length; i++) {
+                if(!data[i].isReply){
                 const div = document.createElement('div');
                 div.id = data[i]._id;
                 div.className = "commentDiv"
@@ -264,7 +265,7 @@ const displayCommentsAtURL = () => {
                     chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
                 }
             
-                
+            } 
 
 
                 if(data[i].replies.length != 0){

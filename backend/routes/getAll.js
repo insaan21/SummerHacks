@@ -46,7 +46,7 @@ router.get('/allReplies/:commentID', async (req, res) => {
 });
 
 router.get('/allCommentsAtURL/:url', async (req, res) => {
-    const comments = await Comments.find({url : req.params.url, isReply : false});
+    const comments = await Comments.find({url : req.params.url});
    
     comments.sort(function(a, b){
         return b.likes.length - a.likes.length;
