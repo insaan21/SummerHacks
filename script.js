@@ -284,18 +284,20 @@ const displayCommentsAtURL = () => {
                         var replyDiv = document.createElement('div');
                         replyDiv.id = reply._id;
                         replyDiv.className = "commentDiv"
+                        const line = document.createElement('div');
+                        line.className = "line"
                         const userDiv1 = document.createElement('div');
-                        userDiv1.className = 'message123';
+                        userDiv1.className = 'message123reply';
                         userDiv1.textContent = reply.user.userName 
                         userDiv1.value = reply.user._id;
                         const messagediv1 = document.createElement('div');
-                        messagediv1.className = 'message321';
+                        messagediv1.className = 'message321reply';
                         messagediv1.textContent ="@" + "" + reply.replyTo.userName + " " + reply.comment;
                         const currentImage1 = document.createElement("IMG");
-                        currentImage1.className = 'userimage';
+                        currentImage1.className = 'userimagereply';
                         currentImage1.src = reply.user.thumbnail;
                         const date2 = document.createElement('div');
-                        date2.className = 'date';
+                        date2.className = 'datereply';
                         var date3 = new Date(reply.date);
                         var options = { month: 'long'};
                         var month = new Intl.DateTimeFormat('en-US', options).format(date3);
@@ -320,6 +322,7 @@ const displayCommentsAtURL = () => {
                         var numberLikes = likes.length
                         likeNumber.innerHTML = numberLikes;
                         checkIfLiked(likeButton1);
+                        replyDiv.appendChild(line);
                         replyDiv.appendChild(currentImage1);
                         replyDiv.appendChild(userDiv1);
                         replyDiv.appendChild(messagediv1);
