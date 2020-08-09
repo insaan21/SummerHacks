@@ -40,6 +40,9 @@
         ul[id="Buttons"]{
             padding-inline-start: 0px;
         }
+        p[id="actualComment"]{
+            margin-bottom: 0px;
+        }
     </style>
 </head>
 
@@ -83,7 +86,7 @@
 
                 <hr />
                 <% for(comment of comments) {%>
-                    <p><%=comment.comment%></p>
+                    <p id="actualComment"><%=comment.comment%></p>
                     <a href = "<%=comment.url%>" >URL</a>
         <% } %>  
             </div>
