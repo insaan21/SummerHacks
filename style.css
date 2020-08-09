@@ -32,7 +32,7 @@ body{
 }
 
 .userimagereply{
-    grid-area: 1 / 1 / 5 / 2;
+    grid-area: 2 / 1 / 4 / 2;
     height: 30px;
     width: 30px;
     border-radius: 50%;
@@ -44,6 +44,16 @@ body{
     margin-bottom: 10px;
     float: left;*/ 
 }
+
+.line{
+    grid-row: 1 / 5;
+    grid-column: 1 / 1;
+    width: 2px;
+    height: auto;
+    border-bottom: 70px solid grey;
+    align-self: center;
+    margin-left: 5px;
+    }
 
 .message123{
     grid-area: 1 / 2 / 2 / 6;

@@ -286,6 +286,8 @@ const displayCommentsAtURL = () => {
                         var replyDiv = document.createElement('div');
                         replyDiv.id = reply._id;
                         replyDiv.className = "commentDiv"
+                        const line = document.createElement('div');
+                        line.className = "line"
                         const userDiv1 = document.createElement('div');
                         userDiv1.className = 'message123reply';
                         userDiv1.textContent = reply.user.userName 
@@ -322,6 +324,7 @@ const displayCommentsAtURL = () => {
                         var numberLikes = likes.length
                         likeNumber.innerHTML = numberLikes;
                         checkIfLiked(likeButton1);
+                        replyDiv.appendChild(line);
                         replyDiv.appendChild(currentImage1);
                         replyDiv.appendChild(userDiv1);
                         replyDiv.appendChild(messagediv1);
