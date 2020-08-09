@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const { route } = require('./auth');
+const Comments = require('../models/Comments');
 const path = require('path');
 
 const checkAuth = (req, res, next) => {
@@ -20,7 +21,11 @@ router.get('/', checkAuth, async (req, res) => {
 });
 
 router.get('/getProfile/', checkAuth,  async (req, res) => {
-    res.render('profile' , {user : req.user});
+    const comments = await Comments.find({userID : req.user._id});
+    comments.sort(function(a, b){
+        return b.likes.length - a.likes.length;
+    });
+    res.render('profile' , {user : req.user, comments : comments});
 });
 
 

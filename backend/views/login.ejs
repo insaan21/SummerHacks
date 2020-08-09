@@ -1,15 +1,24 @@
-<h1>Login</h1>
-<% if (messages.error) { %>
-  <%= messages.error %>
-<% } %>
-<form action="/api/user/login" method="POST">
-  <div>
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
-  </div>
-  <div>
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required>
-  </div>
-  <button type="submit">Login</button>
-</form>
+<div class="login">
+  <h1>Login to ChromeComments</h1>
+  <% if (messages.error) { %>
+    <%= messages.error %>
+  <% } %>
+    
+  <form  action="/api/user/login" method="POST">
+      <link rel="stylesheet" type = "text/css" href="/loginstyle.css">
+    <p><input type="text" id="email" name="email" value="" placeholder="Email"></p>
+    <p><input type="password" id = "password" name="password" value="" placeholder="Password"></p>
+    <p class="remember_me">
+      <label>
+        <input type="checkbox" name="remember_me" id="remember_me">
+        Remember me on this computer
+      </label>
+    </p>
+    <p class="submit"><input type="submit" value="Login"></p>
+  </form>
+</div>
+  
+
+<div class="login-help">
+  <p>Forgot your password? <a href="#">Click here.</a></p>
+</div>
