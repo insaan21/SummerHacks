@@ -19,7 +19,7 @@ window.onload = function() {
                     alert(register.responseText);
                 }
                 else{
-                    chrome.tabs.create({ url: 'http://localhost:5000/api/user/loginPage' });
+                  window.location.href = "http://localhost:5000/api/user/loginPage"; 
                 }
             }
             register.send(JSON.stringify(user));

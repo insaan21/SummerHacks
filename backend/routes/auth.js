@@ -70,6 +70,9 @@ router.get('/logout', checkAuth, (req, res) => {
     res.redirect('/api/user/loginPage')
 })
 
+router.get('/registerPage', checkNotAuth, (req, res) => {
+    res.render('register');
+})
 
 
 

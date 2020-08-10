@@ -20,7 +20,7 @@ const registerValidation = (data) => {
         .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
         .required(),
     });
-    console.log(schema.validate(data));
+    //console.log(schema.validate(data));
     return schema.validate(data);
 };
 

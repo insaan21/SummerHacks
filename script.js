@@ -41,7 +41,7 @@ window.onload = function () {
     console.log(googleUser);
     console.log(jwtUser);
     if(!googleUser && !jwtUser){
-        chrome.tabs.create({ url: chrome.runtime.getURL("loginOptions.html") });
+        chrome.tabs.create({ url: 'http://localhost:5000/api/user/loginPage' });
     }
 
     //get current user ID
