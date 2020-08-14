@@ -9,7 +9,7 @@ window.onload = function () {
     
     //checked if logged in 
     var loginRequest1 = new XMLHttpRequest();
-    loginRequest1.open('GET', 'http://localhost:5000/profile', false);
+    loginRequest1.open('GET', 'http://chromecomments.ddns.net/profile', false);
     loginRequest1.onload =  function () {
         var response = loginRequest1.responseText;
         console.log(response);
@@ -24,7 +24,7 @@ window.onload = function () {
     loginRequest1.send();
 
     var jwtloginRequest1 = new XMLHttpRequest();
-    jwtloginRequest1.open('GET', 'http://localhost:5000/api/posts/', false);
+    jwtloginRequest1.open('GET', 'http://18.223.212.223/api/posts/', false);
     jwtloginRequest1.onload = function () {
         var response = jwtloginRequest1.responseText;
         console.log(response);
@@ -41,12 +41,12 @@ window.onload = function () {
     console.log(googleUser);
     console.log(jwtUser);
     if(!googleUser && !jwtUser){
-        chrome.tabs.create({ url: 'http://localhost:5000/api/user/loginPage' });
+        chrome.tabs.create({ url: 'http://18.223.212.223/api/user/loginPage' });
     }
 
     //get current user ID
     var loginRequest2 = new XMLHttpRequest();
-    loginRequest2.open('GET', 'http:localhost:5000/profile', false);
+    loginRequest2.open('GET', 'http://chromecomments.ddns.net/profile', false);
     loginRequest2.onload = async function () {
         currentUser = await loginRequest2.responseText;
     }
@@ -72,7 +72,7 @@ window.onload = function () {
         var request1 = new XMLHttpRequest();
 
         //add comment to database
-        request1.open("POST", "http://localhost:5000/add");
+        request1.open("POST", "http://18.223.212.223/add");
         request1.setRequestHeader('Content-Type', 'application/json');
         request1.send(JSON.stringify(addComment));
 
@@ -132,7 +132,7 @@ window.onload = function () {
             likestate.classList.toggle("likeButtonFilled");  
             if(likestate.className == "likeButton likeButtonFilled"){
                 const likeRequest = new XMLHttpRequest();
-                likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                likeRequest.open('PATCH',  'http://18.223.212.223/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
                 likeRequest.send();
                 var likeString = document.getElementById("likeNumber" + this.value).innerHTML;
                 var likeNumber = parseInt(likeString, 10);
@@ -142,7 +142,7 @@ window.onload = function () {
             }
             else{
                 const disLikeRequest = new XMLHttpRequest();
-                disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                disLikeRequest.open('PATCH',  'http://18.223.212.223/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
                 disLikeRequest.send();
                 var likeString2 = document.getElementById("likeNumber" + this.value).innerHTML;
                 var likeNumber2 = parseInt(likeString2, 10);
@@ -151,19 +151,19 @@ window.onload = function () {
             }
         }  
         userDiv.onclick = async function() {
-            await chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.value});
+            await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
         }
     }
 
     //logout
     document.getElementById('logout').onclick = function() {
         var logoutRequest = new XMLHttpRequest();
-        logoutRequest.open('GET', 'http://localhost:5000/auth/logout');
+        logoutRequest.open('GET', 'http://chromecomments.ddns.net/auth/logout');
         logoutRequest.send();
     }
 
     document.getElementById('profile').onclick = function() {
-        chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
+        chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile'});
     }
 
 
@@ -176,7 +176,7 @@ const displayCommentsAtURL = () => {
     var url = document.getElementById('url').value;
     var newURL = url.replace(/\//g, "%2F");
     var request2 = new XMLHttpRequest();
-    request2.open('GET', 'http://localhost:5000/get/allCommentsAtURL/' + newURL);
+    request2.open('GET', 'http://18.223.212.223/get/allCommentsAtURL/' + newURL);
     request2.onload = function () {
         const data = JSON.parse(request2.response);
         for (var i = 0; i < data.length; i++) {
@@ -238,7 +238,7 @@ const displayCommentsAtURL = () => {
                     likestate.classList.toggle("likeButtonFilled");  
                     if(likestate.className == "likeButton likeButtonFilled"){
                         const likeRequest = new XMLHttpRequest();
-                        likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                        likeRequest.open('PATCH',  'http://18.223.212.223/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
                         likeRequest.send();
                         var likeString = document.getElementById("likeNumber" + this.value).innerHTML;
                         var likeNumber = parseInt(likeString, 10);
@@ -248,7 +248,7 @@ const displayCommentsAtURL = () => {
                     }
                     else{
                         const disLikeRequest = new XMLHttpRequest();
-                        disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                        disLikeRequest.open('PATCH',  'http://18.223.212.223/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
                         disLikeRequest.send();
                         var likeString2 = document.getElementById("likeNumber" + this.value).innerHTML;
                         var likeNumber2 = parseInt(likeString2, 10);
@@ -258,11 +258,11 @@ const displayCommentsAtURL = () => {
                 }  
                 
                 userDiv.onclick = async function() {
-                    await chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.value});
+                    await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
                 }
 
                 document.getElementById('profile').onclick = function() {
-                    chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile'});
+                    chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile'});
                 }
             
             } 
@@ -272,7 +272,7 @@ const displayCommentsAtURL = () => {
                     //console.log('hello');
                     var replies = [];
                     var getReplies = new XMLHttpRequest();
-                    getReplies.open('GET', 'http://localhost:5000/get/allReplies/' + data[i]._id, false);
+                    getReplies.open('GET', 'http://18.223.212.223/get/allReplies/' + data[i]._id, false);
                     getReplies.send();
                     if(getReplies.status == 200){
                         replies = JSON.parse(getReplies.response);
@@ -340,7 +340,7 @@ const displayCommentsAtURL = () => {
                             likestate.classList.toggle("likeButtonFilled");  
                             if(likestate.className == "likeButton likeButtonFilled"){
                                 const likeRequest = new XMLHttpRequest();
-                                likeRequest.open('PATCH',  'http://localhost:5000/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                                likeRequest.open('PATCH',  'http://18.223.212.223/likes/addLike/' + this.value + "/" + JSON.parse(currentUser)._id);
                                 likeRequest.send();
                                 var likeString = document.getElementById("likeNumber" + this.value).innerHTML;
                                 var likeNumber = parseInt(likeString, 10);
@@ -349,7 +349,7 @@ const displayCommentsAtURL = () => {
                             }
                             else{
                                 const disLikeRequest = new XMLHttpRequest();
-                                disLikeRequest.open('PATCH',  'http://localhost:5000/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
+                                disLikeRequest.open('PATCH',  'http://18.223.212.223/likes/dislike/' + this.value + "/" + JSON.parse(currentUser)._id);
                                 disLikeRequest.send();
                                 var likeString2 = document.getElementById("likeNumber" + this.value).innerHTML;
                                 var likeNumber2 = parseInt(likeString2, 10);
@@ -359,7 +359,7 @@ const displayCommentsAtURL = () => {
                         }  
 
                         userDiv1.onclick = async function() {
-                            await chrome.tabs.create({url : 'http://localhost:5000/profile/getProfile/' + this.value});
+                            await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
                         }
                         }
                         
@@ -380,14 +380,14 @@ const displayUserComments = () => {
 
     //get current User ID
     var loginRequest3 = new XMLHttpRequest(); 
-    loginRequest3.open('GET', 'http:localhost:5000/profile');
+    loginRequest3.open('GET', 'http://chromecomments.ddns.net/profile');
     loginRequest3.onload = function () {
         currentUser = loginRequest3.responseText;
     }
     loginRequest3.send();
 
     var request3 = new XMLHttpRequest();
-    request3.open('GET', 'http://localhost:5000/get/all');
+    request3.open('GET', 'http://18.223.212.223/get/all');
     request3.onload = function () {
         //all the comments
         const data = JSON.parse(request3.response);
@@ -458,11 +458,11 @@ function createReply(replyButton) {
         "_id" : mongoObjectId()
     }
     var replyRequest = new XMLHttpRequest();
-    replyRequest.open('POST', 'http://localhost:5000/add');
+    replyRequest.open('POST', 'http://18.223.212.223/add');
     replyRequest.setRequestHeader('Content-Type', 'application/json');
     replyRequest.send(JSON.stringify(reply));
     var addReplyToParent = new XMLHttpRequest();
-    addReplyToParent.open('PATCH', 'http://localhost:5000/add/reply/' + commentid + '/' + reply._id);
+    addReplyToParent.open('PATCH', 'http://18.223.212.223/add/reply/' + commentid + '/' + reply._id);
     addReplyToParent.send();
     
 
@@ -474,7 +474,7 @@ function createReply(replyButton) {
 const checkIfLiked = (like) => {
     const checkIfLiked = new XMLHttpRequest();
     //console.log(JSON.parse(currentUser));
-    checkIfLiked.open('GET', 'http://localhost:5000/likes/userLiked/' + like.value + "/" + JSON.parse(currentUser)._id);
+    checkIfLiked.open('GET', 'http://18.223.212.223/likes/userLiked/' + like.value + "/" + JSON.parse(currentUser)._id);
     checkIfLiked.onload = function() {
         console.log(checkIfLiked.response);
         if(checkIfLiked.response == 'true'){
@@ -487,7 +487,7 @@ const checkIfLiked = (like) => {
 
 const getReplies = (data) => {
     var getReplies = new XMLHttpRequest();
-    getReplies.open('GET', 'http://localhost:5000/get/allReplies/' + data._id);
+    getReplies.open('GET', 'http://18.223.212.223/get/allReplies/' + data._id);
     getReplies.send();
     return JSON.parse(getReplies.response);
 }
