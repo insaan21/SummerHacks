@@ -45,12 +45,23 @@ window.onload = function () {
     }
 
     //get current user ID
-    var loginRequest2 = new XMLHttpRequest();
+    if(jwtUser){
+        var loginRequest2 = new XMLHttpRequest();
+    loginRequest2.open('GET', 'http://18.223.212.223/api/posts/', false);
+    loginRequest2.onload = async function () {
+        currentUser = await loginRequest2.responseText;
+    }
+    loginRequest2.send();
+    }
+    else{
+        var loginRequest2 = new XMLHttpRequest();
     loginRequest2.open('GET', 'http://chromecomments.ddns.net/profile', false);
     loginRequest2.onload = async function () {
         currentUser = await loginRequest2.responseText;
     }
     loginRequest2.send();
+    }
+    
 
     //display all the comments currently on the page
     displayCommentsAtURL();
@@ -151,19 +162,37 @@ window.onload = function () {
             }
         }  
         userDiv.onclick = async function() {
-            await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
-        }
+            if(jwtUser){
+                await chrome.tabs.create({url : 'http://18.223.212.223/profile/getProfile/' + this.value});
+            }
+            else{
+                await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
+            }
+        } 
     }
 
     //logout
     document.getElementById('logout').onclick = function() {
-        var logoutRequest = new XMLHttpRequest();
-        logoutRequest.open('GET', 'http://chromecomments.ddns.net/auth/logout');
-        logoutRequest.send();
+        if(jwtUser){
+            var logoutRequest = new XMLHttpRequest();
+            logoutRequest.open('GET', 'http://18.223.212.223/api/user/logout');
+            logoutRequest.send();
+        }
+        else{
+            var logoutRequest = new XMLHttpRequest();
+            logoutRequest.open('GET', 'http://chromecomments.ddns.net/auth/logout');
+            logoutRequest.send();
+        }
     }
 
     document.getElementById('profile').onclick = function() {
-        chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile'});
+        if(jwtUser) {
+            chrome.tabs.create({url : 'http://18.223.212.223/profile/getProfile'});
+        }
+        else{
+            chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile'});
+        }
+        
     }
 
 
@@ -258,11 +287,22 @@ const displayCommentsAtURL = () => {
                 }  
                 
                 userDiv.onclick = async function() {
-                    await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
+                    if(jwtUser){
+                        await chrome.tabs.create({url : 'http://18.223.212.223/profile/getProfile/' + this.value});
+                    }
+                    else{
+                        await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
+                    }
                 }
 
                 document.getElementById('profile').onclick = function() {
-                    chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile'});
+                    if(jwtUser){
+                        chrome.tabs.create({url : 'http://18.223.212.223/profile/getProfile'});
+                    }
+                    else{
+                        chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile'});
+                    }
+                    
                 }
             
             } 
@@ -359,7 +399,13 @@ const displayCommentsAtURL = () => {
                         }  
 
                         userDiv1.onclick = async function() {
-                            await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
+                            if(jwtUser){
+                                await chrome.tabs.create({url : 'http://18.223.212.223/profile/getProfile/' + this.value});
+                            }
+                            else{
+                                await chrome.tabs.create({url : 'http://chromecomments.ddns.net/profile/getProfile/' + this.value});
+                            }
+                            
                         }
                         }
                         
@@ -379,6 +425,16 @@ const displayCommentsAtURL = () => {
 const displayUserComments = () => {
 
     //get current User ID
+    if(jwtUser){
+    var loginRequest3 = new XMLHttpRequest(); 
+    loginRequest3.open('GET', 'http://18.223.212.223/api/posts');
+    loginRequest3.onload = function () {
+        currentUser = loginRequest3.responseText;
+    }
+    loginRequest3.send();
+
+    }
+    else{
     var loginRequest3 = new XMLHttpRequest(); 
     loginRequest3.open('GET', 'http://chromecomments.ddns.net/profile');
     loginRequest3.onload = function () {
@@ -386,6 +442,9 @@ const displayUserComments = () => {
     }
     loginRequest3.send();
 
+    }
+    
+    
     var request3 = new XMLHttpRequest();
     request3.open('GET', 'http://18.223.212.223/get/all');
     request3.onload = function () {
