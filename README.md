@@ -1,4 +1,8 @@
 # SummerHacks
+ChromeComments
+
+ChromeComments allows users to make comments on any webpage, even ones where users would not usually be able to make any comments or remarks. Users will be able to communicate with others on important events and issues. 
+
 Freetail Hackers SummerHacks Hackathon
 
 
